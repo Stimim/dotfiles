@@ -1,0 +1,9 @@
+[submodule "bashconfigs"]
+	path = bashconfigs
+	url = https://github.com/Stimim/bashconfigs
+[submodule "vimconfigs"]
+	path = vimconfigs
+	url = https://github.com/Stimim/vimconfigs
+[submodule "gitconfigs"]
+	path = gitconfigs
+	url = https://github.com/Stimim/gitconfigs
