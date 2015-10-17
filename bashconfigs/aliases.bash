@@ -2,6 +2,9 @@ alias ptt='ssh -C bbsu@ptt.cc'
 alias ptt2='ssh -C bbsu@ptt2.cc'
 alias Nethack='ssh nethack@alt.org'
 
+alias g='git'
+__git_complete g __git_main
+
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
