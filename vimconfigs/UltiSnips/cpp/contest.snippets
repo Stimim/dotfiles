@@ -1,0 +1,1352 @@
+snippet class
+class ${1:ClassName} {
+ private:
+ public:
+};
+endsnippet
+
+snippet struct
+struct ${1:ClassName} {
+ private:
+ public:
+};
+endsnippet
+
+snippet def "#define ..." b
+#define ${1:METHOD}(${2:x}) ($2)
+endsnippet
+
+snippet ZCLASS "an prime field implementation" b
+/** DEFINE PRIME FIELD CLASS **/
+struct ZZ {
+  static constexpr long long MOD = ${1:1000000007LL};
+  long long value;
+  mutable long long cached_inv;
+  ZZ(long long v=0) : value(v), cached_inv(-1) {
+    ensure();
+  }
+  void ensure() {
+    if (value < 0 || value >= MOD) {
+      value %= MOD;
+      value = (value + MOD) % MOD;
+    }
+  }
+  void R() { scanf("%lld", &value); cached_inv = -1; }
+  ZZ& operator += (const ZZ& o) {
+    value += o.value;
+    if (value >= MOD) value -= MOD;
+    return *this;
+  }
+  ZZ& operator -= (const ZZ& o) {
+    value -= o.value;
+    if (value < 0) value += MOD;
+    return *this;
+  }
+  ZZ& operator *= (const ZZ& o) {
+    value *= o.value;
+    value %= MOD;
+    return *this;
+  }
+  ZZ& operator /= (const ZZ& o) {
+    return (*this *= o.inv());
+  }
+  #define DEFOPT(opt) \
+    ZZ operator opt (const ZZ& o) const { \
+      ZZ x = *this; x opt##= o; return x; }
+  DEFOPT(+)
+  DEFOPT(-)
+  DEFOPT(*)
+  DEFOPT(/)
+  #undef DEFOPT
+  ZZ pow(int n) const {
+    ZZ x = *this; ZZ r = 1;
+    while (n > 0) {
+      if (n & 1) { r *= x; }
+      x *= x; n >>= 1;
+    }
+    return r;
+  }
+  ZZ inv() const {
+    return cached_inv == -1 ? cached_inv = pow(MOD - 2).value : cached_inv;
+  }
+};
+inline void read_this(ZZ&z) {read_this(z.value);}
+ostream& operator<< (ostream& os, const ZZ& x) {
+  assert (x.value >= 0); os << x.value; return os;
+}
+/** END OF ZZ **/
+$0
+endsnippet
+
+snippet HEADERS "for coding contests" b
+/** HEADER FOR CODING CONTESTS **/
+#include <vector>
+#include <cstdio>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <tuple>
+#include <cassert>
+#include <cstring>
+#include <string>
+#include <queue>
+#include <limits>
+#include <stack>
+typedef long long LL;
+typedef unsigned long long ULL;
+template <typename T> using V = std::vector<T>;
+#define RI(x, ...) read_these(x, ##__VA_ARGS__)
+#define DRI(type, x, ...) type x, ##__VA_ARGS__;read_these(x, ##__VA_ARGS__)
+#define RV(v) read_these(v)
+#define RNP(n, p) read_these(n,p)
+inline void read_this(int&v){scanf("%d",&v);}
+inline void read_this(unsigned int&v){scanf("%u",&v);}
+inline void read_this(long long&v){scanf("%lld",&v);}
+inline void read_this(unsigned long long&v){scanf("%llu",&v);}
+inline void read_these(){}
+template <typename T, typename...Ts>
+inline void read_these(T&v,Ts&... vs){read_this(v);read_these(vs...);}
+template <typename T>
+inline void read_these(std::vector<T>&vs){for(auto&v:vs)read_this(v);}
+template<typename T>
+inline void read_these(size_t n,T*vs){for(size_t i=0;i<n;++i)read_this(vs[i]);}
+
+// add "l" if the variable is long, "ll" if the variable is long long
+#define HAMMING_WEIGHT(x)		__builtin_popcount(x)
+#define PARITY(x)						__builtin_parity(x)
+#define N_LEADING_ZERO(x)		__builtin_clz(x)
+#define N_TRAILING_ZERO(x)	__builtin_ctz(x)
+
+/** END OF HEADER **/
+$0
+endsnippet
+
+snippet BinaryIndexedTree "binary indexed tree" b
+template<typename T>
+struct BinaryIndexedTree {
+  /**
+   * let p = max {q s.t. ((2^q - 1) & i) == 2^q - 1}
+   *
+   * value[i] = arr[i - 2^p - 1] + ... + arr[i]
+   *
+   * ex:
+   *  value[0] = arr[0]
+   *  value[1] = arr[0] + arr[1]
+   *  value[2] = arr[0]
+   *  value[3] = arr[0] + arr[1] + arr[2] + arr[3]
+   */
+  vector<T> value;
+  void init(int n) {
+    value.clear();
+    value.resize(n, 0);
+  }
+  /**
+   * returns arr[0] + ... + arr[i]
+   */
+  T query(int i) const {
+    T sum = 0;
+    for (; i >= 0; -- i) {
+      sum += value[i];
+      i &= (i + 1);
+    }
+    return sum;
+  }
+  T query(int i, int j) const {
+    return query(j) - query(i - 1);
+  }
+  /**
+   * arr[i] += delta
+   */
+  void add(int i, T delta) {
+    for (; i < (int) value.size();) {
+      value[i] += delta;
+      i |= (i + 1);
+    }
+  }
+};
+endsnippet
+
+snippet LINKCUT "link-cut tree" b
+struct LinkCutTree {
+  struct Node {
+    static vector<Node> node_pool;
+    static size_t node_pool_tail;
+    static Node* get_new_node() {
+      if (node_pool_tail >= node_pool.size()) {
+        exit(0);
+      }
+      return &node_pool[node_pool_tail ++];
+    }
+    static void reset_node_pool() {
+      node_pool_tail = 0;
+    }
+    Node* parent;
+    Node* path_parent;
+    Node* l_child;
+    Node* r_child;
+#define DEF(type, name) type SPLAY_##name; type MY_##name;
+#define SPLAY(name) SPLAY_##name // the sum of MY(name) in same splay tree
+#define MY(name) MY_##name
+    DEF(LL, size); // sum of SPLAY(size) of nodes v, s.t. v.path_parent = this
+    DEF(LL, cost); // sum of SPLAY(cost) of nodes v, s.t. v.path_parent = this
+    DEF(LL, dv);   // my->value - parent->value in rep. tree
+    Node* init(LL value) {
+      MY(cost) = 0;
+      MY(size) = 1;
+      MY(dv) = value;
+      l_child = r_child = parent = path_parent = nullptr;
+      update();
+      return this;
+    }
+    bool is_root() const {
+      return parent == nullptr;
+    }
+    LL total_cost() const {
+      auto v = MY(dv);
+      if (l_child != nullptr) {
+        v += l_child->SPLAY(dv);
+      }
+      auto s = MY(size);
+      if (r_child != nullptr) {
+        s += r_child->SPLAY(size);
+      }
+      return SPLAY(cost) + v * s;
+    }
+    void update() {
+      SPLAY(size) = MY(size);
+      SPLAY(cost) = MY(cost);
+      SPLAY(dv) = MY(dv);
+      if (l_child != nullptr) {
+        SPLAY(size) += l_child->SPLAY(size);
+        SPLAY(cost) += l_child->total_cost();
+        SPLAY(dv) += l_child->SPLAY(dv);
+      }
+      if (r_child != nullptr) {
+        SPLAY(size) += r_child->SPLAY(size);
+        SPLAY(cost) += r_child->total_cost();
+        SPLAY(dv) += r_child->SPLAY(dv);
+      }
+    }
+    // move this move upward
+    void rotate() {
+      if (parent == nullptr) {
+        return;
+      }
+      auto p = parent;
+      auto g = p->parent;
+      if (p->is_root()) {
+        path_parent = p->path_parent;
+        p->path_parent = nullptr;
+        parent = nullptr;
+      } else {
+        if (p == g->l_child) {
+          g->set_l_child(this);
+        } else if (p == g->r_child) {
+          g->set_r_child(this);
+        }
+      }
+      if (this == p->l_child) {
+        p->set_l_child(r_child);
+        set_r_child(p);
+      } else if (this == p->r_child) {
+        p->set_r_child(l_child);
+        set_l_child(p);
+      }
+      p->update();
+      update();
+    }
+    void set_l_child(Node* x) {
+      l_child = x;
+      if (x != nullptr) {
+        x->parent = this;
+      }
+    }
+    void set_r_child(Node* x) {
+      r_child = x;
+      if (x != nullptr) {
+        x->parent = this;
+      }
+    }
+  };
+  void splay(Node* x) {
+    while (x->parent != nullptr) {
+      x->rotate();
+    }
+  }
+  void separate_r_child(Node* x) {
+    if (x->r_child != nullptr) {
+      auto r = x->r_child;
+      x->r_child->path_parent = x;
+      x->r_child->parent = nullptr;
+      x->r_child = nullptr;
+      x->MY(size) += r->SPLAY(size);
+      x->MY(cost) += r->total_cost();
+      x->update();
+    }
+  }
+  void append_r_child(Node* x, Node* r) {
+    if (x->r_child != nullptr) {
+      exit (0);
+    }
+    x->r_child = r;
+    r->parent = x;
+    r->path_parent = nullptr;
+    x->MY(size) -= r->SPLAY(size);
+    x->MY(cost) -= r->total_cost();
+    x->update();
+  }
+  void access(Node* x) {
+    splay(x);
+    separate_r_child(x);
+    while (x->path_parent != nullptr) {
+      auto pp = x->path_parent;
+      splay(pp);
+      separate_r_child(pp);
+      append_r_child(pp, x);
+      x->rotate();
+    }
+  }
+  // make v a child of p
+  void link(Node* v, Node* p) {
+    access(p);
+    access(v);
+    v->set_l_child(p);
+    auto pv = p->SPLAY(dv); // the value of p
+    v->MY(dv) -= pv;
+    v->update();
+  }
+  void cut(Node* v) {
+    access(v);
+    auto l = v->l_child;
+    if (l != nullptr) {
+      v->l_child = nullptr;
+      l->parent = nullptr;
+    }
+    v->update();
+  }
+  LL query(Node* x) {
+    access(x);
+    LL w = x->MY(dv);
+    if (x->l_child != nullptr) {
+      w += x->l_child->SPLAY(dv);
+    }
+    return x->MY(cost) + x->MY(size) * w;
+  }
+  LinkCutTree() { }
+  void solve() {
+    int n, m;
+    RI(n);
+    vector<LL> vs(n);
+    RV(vs);
+    Node::reset_node_pool();
+    vector<Node*> nodes(n);
+    nodes.reserve(300000);
+    for (auto i = 0; i < n; ++ i) {
+      nodes[i] = Node::get_new_node()->init(vs[i]);
+    }
+    for (auto i = 0; i < n - 1; ++ i) {
+      int p, v;
+      RI(p); RI(v);
+      link(nodes[v], nodes[p]);
+    }
+    RI(m);
+    LL special = 0;
+    while (m --) {
+      int type;
+      LL key, value;
+      RI(type, key);
+      if (special + key >= (LL) nodes.size() || special + key < 0) {
+        exit(0);
+      }
+      auto v = nodes[special + key];
+      switch (type) {
+        case 1:
+          RI(value);
+          nodes.push_back(Node::get_new_node()->init(value));
+          link(nodes.back(), v);
+          break;
+        case 2:
+          RI(value);
+          access(v);
+          v->MY(dv) += value;
+          v->update();
+          break;
+        case 3:
+          cut(v);
+          break;
+        case 4:
+          special = query(v);
+          printf("%lld\n", special);
+          break;
+      }
+    }
+  }
+};
+typedef typename LinkCutTree::Node Node;
+vector<Node> Node::node_pool{300000};
+size_t Node::node_pool_tail = 0;
+endsnippet
+
+snippet AhoChorasick "exact string set matching problem" b
+struct AhoChorasick {
+  struct Vertex {
+    static constexpr int N_CHILDS = 10;
+    static constexpr int UNDEF_REF = 0;
+    bool in_dict;
+    int fail_ptr;
+    int childs[N_CHILDS];
+    int out;
+    void init(bool in_d = false) {
+      out = 0;
+      in_dict = in_d;
+      fail_ptr = UNDEF_REF;
+      memset(childs, 0, sizeof(childs));
+    }
+  };
+  int root;
+  vector<Vertex> pool;
+  int next_idx;
+  int new_node() {
+    assert (next_idx < (int) pool.size());
+    pool[next_idx].init();
+    return next_idx ++;
+  }
+  void reset(int capa = 200005) {
+    next_idx = 1;
+    pool.resize(capa);
+    root = new_node();
+  }
+  void init(const vector<string>& patterns) {
+    // 1. build keyword tree for P
+    for (const auto& pattern : patterns) {
+      auto v = root;
+      for (auto c : pattern) {
+        int value = c - '0';
+        if (pool[v].childs[value] == Vertex::UNDEF_REF) {
+          pool[v].childs[value] = new_node();
+        }
+        v = pool[v].childs[value];
+      }
+      pool[v].in_dict = true;
+      pool[v].out = 1;
+    }
+    // 2. complete goto function for the root
+    for (auto a = 0; a < Vertex::N_CHILDS; ++ a) {
+      if (pool[root].childs[a] == Vertex::UNDEF_REF) {
+        pool[root].childs[a] = root;
+      }
+    }
+    vector<int> que;
+    que.reserve(next_idx);
+    for (auto a = 0; a < Vertex::N_CHILDS; ++ a) {
+      int q;
+      if ((q = pool[root].childs[a]) != root) {
+        pool[q].fail_ptr = root;
+        que.push_back(q);
+      }
+    }
+    for (size_t i = 0; i < que.size(); ++ i) {
+      auto r = que[i];
+      for (auto a = 0; a < Vertex::N_CHILDS; ++ a) {
+        int u;
+        if ((u = pool[r].childs[a]) != Vertex::UNDEF_REF) {
+          que.push_back(u);
+          auto v = pool[r].fail_ptr;
+          while (pool[v].childs[a] == Vertex::UNDEF_REF) {
+            v = pool[v].fail_ptr;
+          }
+          auto fu = pool[v].childs[a];
+          pool[u].fail_ptr = fu;
+          pool[u].out += pool[fu].out;
+        }
+      }
+    }
+  }
+  int match(const string& txt) const {
+    int q = root;
+    int ans = 0;
+    for (auto c : txt) {
+      int value = c - '0';
+      while (pool[q].childs[value] == Vertex::UNDEF_REF) {
+        q = pool[q].fail_ptr;
+      }
+      q = pool[q].childs[value];
+      ans += pool[q].out;
+    }
+    return ans;
+  }
+};
+endsnippet
+
+snippet SuffixTree "SuffixTree" b
+struct SuffixTree {
+  struct Vertex {
+    static constexpr int E_SIZE = 11;
+    static constexpr int END_OF_STRING = 1e8;
+    static constexpr int UNDEF_REF = 0;
+    // the path between parent and this node: s[a]..s[b - 1]
+    int a;
+    int b;
+    int suffix_link;
+    int es[E_SIZE]; // 10 is '$'
+    int n_leaves;
+    Vertex() {}
+    void init(int _a, int _b) {
+      this->a = _a;
+      this->b = _b;
+      suffix_link = UNDEF_REF;
+      memset(es, 0, sizeof(es));
+    }
+  };
+  vector<Vertex> pool;
+  size_t used_size;
+  string txt;
+  int new_node(int a, int b) {
+    pool[used_size].init(a, b);
+    return used_size ++;
+  }
+  void init(int n) {
+    pool.resize(n);
+    used_size = 1;
+  }
+  void insert(const string& in) {
+    txt = in;
+    txt.push_back(':');
+    int root = new_node(0, 0);
+    int active_node = root;
+    for (size_t tail = 0, head = 0; tail < txt.size(); ++ tail) {
+      int ant = root;
+      while (head <= tail) {
+        while (true) {
+          if (tail == head) break;
+          auto q = pool[active_node].es[txt[head] - '0'];
+          if (head + (pool[q].b - pool[q].a) > tail) break;
+          head += pool[q].b - pool[q].a;
+          active_node = q;
+        }
+        auto q = active_node;
+        if (head == tail) {
+          if (pool[active_node].es[txt[head] - '0'] != Vertex::UNDEF_REF) break;
+        } else if (head < tail) {
+          auto r = pool[active_node].es[txt[head] - '0'];
+          auto k = pool[r].a + tail - head;
+          if (txt[tail] == txt[k]) break;
+          pool[active_node].es[txt[head] - '0'] = q = new_node(pool[r].a, k);
+          pool[q].es[txt[k] - '0'] = r;
+          pool[r].a = k;
+        }
+        pool[q].es[txt[tail] - '0'] = new_node(tail, Vertex::END_OF_STRING);
+        if (ant != root) {
+          pool[ant].suffix_link = q;
+        }
+        ant = q;
+        if (pool[active_node].suffix_link != Vertex::UNDEF_REF) {
+          active_node = pool[active_node].suffix_link;
+        } else {
+          head ++;
+        }
+      }
+      if (ant != root) {
+        pool[ant].suffix_link = active_node;
+      }
+    }
+  }
+  void count_leaves() {
+    vector<pair<int, bool>> vec;
+    vec.reserve(100000);
+    stack<pair<int, bool>, vector<pair<int, bool>>> st(vec);
+    st.push({1, true});
+    while (!st.empty()) {
+      auto v = st.top().first;
+      auto b = st.top().second;
+      st.pop();
+      if (b) {
+        st.push({v, false});
+        for (auto e = 0; e < Vertex::E_SIZE; ++ e) {
+          if (pool[v].es[e] != Vertex::UNDEF_REF) {
+            st.push({pool[v].es[e], true});
+          }
+        }
+      } else {
+        if (pool[v].b == Vertex::END_OF_STRING) {
+          pool[v].n_leaves = 1;
+        } else {
+          pool[v].n_leaves = 0;
+          for (auto e = 0; e < Vertex::E_SIZE; ++ e) {
+            int u;
+            if ((u = pool[v].es[e]) != Vertex::UNDEF_REF) {
+              pool[v].n_leaves += pool[u].n_leaves;
+            }
+          }
+        }
+      }
+    }
+  }
+  int count(const string& s) const {
+    int active_node = 1;
+    int active_length = 0;
+    int active_edge = 0;
+    for (auto c : s) {
+      int value = c - '0';
+      if (active_length == 0) {
+        int v;
+        if ((v = pool[active_node].es[value]) == Vertex::UNDEF_REF) {
+          // no such branch
+          return 0;
+        } else {
+          active_length = 1;
+          active_edge = value;
+          if (pool[v].a + active_length >= pool[v].b) {
+            active_node = v;
+            active_length = 0;
+          }
+        }
+      } else {
+        auto v = pool[active_node].es[active_edge];
+        if (value == txt[pool[v].a + active_length] - '0') {
+          active_length ++;
+          if (pool[v].a + active_length >= pool[v].b) {
+            active_node = v;
+            active_length = 0;
+          }
+        } else {
+          return 0;
+        }
+      }
+    }
+    if (active_length) {
+      auto v = pool[active_node].es[active_edge];
+      return pool[v].n_leaves;
+    } else {
+      return pool[active_node].n_leaves;
+    }
+    return 0;
+  }
+  void print(int v, int lvl, int tail = 1e8, bool print_n_leaves = false) const {
+    for (auto i = 0; i < lvl; ++ i) {
+      cout << "  ";
+    }
+    cout << "(" << v << ") ";
+    cout << txt.substr(pool[v].a, min(pool[v].b, tail) - pool[v].a) << ' ';
+    if (print_n_leaves) cout << pool[v].n_leaves << ' ';
+    if (pool[v].suffix_link != Vertex::UNDEF_REF) {
+      cout << "sl:" << pool[v].suffix_link << ' ';
+    }
+    cout << endl;
+    int ord[11] = {10, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    for (int i = 0; i < Vertex::E_SIZE; ++ i) {
+      auto u = pool[v].es[ord[i]];
+      if (u != Vertex::UNDEF_REF) {
+        print(u, lvl + 1, tail);
+      }
+    }
+  }
+  void print(int tail = 1e8, bool print_n_leaves = false) const {
+    cout << "------------------------" << endl;
+    print(1, 0, tail, print_n_leaves);
+    cout << "------------------------" << endl;
+  }
+};
+endsnippet
+
+snippet Heap "heap" b
+template<typename T>
+struct Heap {
+  vector<T> vs;
+  void init(size_t n) {
+    vs.clear();
+    vs.reserve(n);
+  }
+  void push(const T& x) {
+    vs.push_back(x);
+    auto i = vs.size() - 1;
+    while (i > 0 && x < vs[(i - 1) / 2]) {
+      vs[i] = vs[(i - 1) / 2];
+      i = (i - 1) / 2;
+    }
+    vs[i] = x;
+  }
+  const T top() const {
+    return vs[0];
+  }
+  bool empty() const {
+    return vs.size() == 0;
+  }
+  void pop() {
+    swap(vs[0], vs[vs.size() - 1]);
+    size_t i = 0;
+    auto x = vs[0];
+    vs.pop_back();
+#define HEAP_L(x) (2 * (x) + 1)
+#define HEAP_R(x) (2 * (x) + 2)
+    while (HEAP_L(i) < vs.size()) {
+      size_t j = HEAP_L(i);
+      if (HEAP_R(i) < vs.size()) {
+        if (vs[HEAP_R(i)] < vs[HEAP_L(i)]) {
+          j = HEAP_R(i);
+        }
+      }
+      if (vs[j] < x) {
+        vs[i] = vs[j];
+        //swap(vs[i], vs[j]);
+        i = j;
+      } else {
+        break;
+      }
+    }
+    vs[i] = x;
+  }
+};
+endsnippet
+
+snippet LCA "least common ancestor" b
+struct Tree {
+  const int LOGMAXN = 16;
+  V<V<int>> parents;
+  V<int> level;
+  V<LL> tin;
+  V<LL> tout;
+  // returns true if x is ancestor of y or x == y
+  bool ancestor(int x, int y) {
+    return tin[x] <= tin[y] && tout[x] >= tout[y];
+  }
+  int lca(int x, int y) {
+    if (ancestor(x, y)) return x;
+    if (ancestor(y, x)) return y;
+    for (int i = LOGMAXN - 1; i >= 0; -- i) {
+      if (!ancestor(parents[x][i], y)) {
+        x = parents[x][i];
+      }
+    }
+    return parents[x][0];
+  }
+	// assumes that 0 is root
+  void build_lca(const V<V<int>>& neighbors) {
+    const int N = neighbors.size();
+    tin.resize(N, 0);
+    tout.resize(N, 0);
+    level.resize(N, 0);
+    LL t = 0;
+    parents.clear();
+    parents.resize(N, vector<int>(LOGMAXN, 0));
+    struct SE {
+      int node;
+      int index;
+      SE(int n, int i) : node(n), index(i) { }
+    };
+    stack<SE> st;
+    st.push({0, 0});
+    while (!st.empty()) {
+      auto v = st.top().node;
+      auto index = st.top().index;
+      st.pop();
+      if (index == 0) { // first time
+        tin[v] = t ++;
+        for (auto i = 1; i < LOGMAXN; ++ i) {
+          parents[v][i] = parents[parents[v][i - 1]][i - 1];
+        }
+      }
+      if (index == neighbors[v].size()) {
+        tout[v] = t ++;
+        continue;
+      }
+      st.push({v, index + 1});
+      auto u = neighbors[v][index];
+      if (u != parents[v][0]) {
+        parents[u][0] = v;
+        level[u] = level[v] + 1;
+        st.push({u, 0});
+      }
+    }
+  }
+  void build(const V<V<int>>& neighbors) {
+    build_lca(neighbors);
+  }
+  LL dist(int x, int y) {
+    auto p = lca(x, y);
+    LL d = level[x] + level[y] - 2 * level[p];
+    return d;
+  }
+}
+endsnippet
+
+snippet GRAPH "graphic class with max flow" b
+struct Graph {
+  struct Edge {
+    Edge(size_t u, size_t r) : r(r), u(u) { }
+    size_t r;
+    size_t u;
+  };
+  vector<Edge> all_edge;
+  vector<vector<size_t>> adj;
+  void print() const {
+    cout << "nodes: " << endl;
+    for (const auto& a : adj) {
+      for (const auto& e : a) {
+        cout << e << ' ';
+      }
+      cout << endl;
+    }
+    cout << "edges: " << endl;
+    for (auto& e : all_edge) {
+      cout << e.u << ' ' << e.r << endl;
+    }
+  }
+  size_t new_node() {
+    // return a new node
+    adj.push_back(vector<size_t>());
+    return adj.size() - 1;
+  }
+  size_t nNodes() const {
+    return adj.size();
+  }
+  // directed edge
+  void add_edge(size_t u, size_t v, size_t cap) {
+    if (u == v || cap <= 0) return;
+    assert (u < nNodes() && v < nNodes());
+    all_edge.push_back(Edge(v, cap));
+    adj[u].push_back(all_edge.size() - 1);
+    all_edge.push_back(Edge(u, 0));
+    adj[v].push_back(all_edge.size() - 1);
+  }
+  size_t dinic_bfs(size_t s, size_t t, vector<bool>& visit, vector<size_t>& dist) {
+    fill(dist.begin(), dist.end(), numeric_limits<size_t>::max());
+    fill(visit.begin(), visit.end(), false);
+    vector<size_t> que(1, s);
+    que.reserve(nNodes());
+    visit[s] = true;
+    dist[s] = 0;
+    for (size_t i = 0; i < que.size(); ++ i) {
+      auto v = que[i];
+      for (auto ref : adj[v]) {
+        auto& e = all_edge[ref];
+        auto u = e.u;
+        if (e.r > 0 && !visit[u]) {
+          dist[u] = dist[v] + 1;
+          visit[u] = true;
+          que.push_back(u);
+          if (u == t) return dist[t];
+        }
+      }
+    }
+    return nNodes();
+  }
+  size_t dinic_dfs(size_t v, size_t df, size_t s, size_t t,
+                   vector<bool>& visit, const vector<size_t>& dist) {
+    if (v == t) return df;
+    if (visit[v]) return 0;
+    visit[v] = true;
+    for (auto i : adj[v]) {
+      auto& e = all_edge[i];
+      auto u = e.u;
+      if (e.r > 0 && dist[v] + 1 == dist[u]) {
+        auto f = dinic_dfs(u, min(df, e.r), s, t, visit, dist);
+        if (f) {
+          e.r -= f;
+          all_edge[i^1].r += f;
+          return f;
+        }
+      }
+    }
+    return 0;
+  }
+  size_t dinic(size_t s, size_t t) {
+    size_t flow = 0;
+    vector<size_t> dist(nNodes());
+    vector<bool> visit(nNodes());
+    while (dinic_bfs(s, t, visit, dist) < nNodes()) {
+      while (true) {
+        fill (visit.begin(), visit.end(), false);
+        auto f = dinic_dfs(s, numeric_limits<size_t>::max(), s, t, visit, dist);
+        if (!f) break;
+        flow += f;
+      }
+    }
+    return flow;
+  }
+  size_t max_flow(size_t s, size_t t) {
+    return dinic(s, t);
+  }
+};
+endsnippet
+
+snippet SPLAYTREE "splay tree" b
+struct SplayTree {
+  struct Node {
+    Node* parent;
+    Node* l_child;
+    Node* r_child;
+    int size; // size of the subtree
+    Node* init() {
+      size = 1;
+      parent = l_child = r_child = nullptr;
+      return this;
+    }
+    bool is_root() const {
+      return parent == nullptr;
+    }
+    void update() {
+      size = 1;
+      if (l_child != nullptr) {
+        size += l_child->size;
+      }
+      if (r_child != nullptr) {
+        size += r_child->size;
+      }
+    }
+    void rotate() {
+      if (parent == nullptr) return;
+      auto p = parent;
+      auto g = p->parent;
+      if (p->is_root()) {
+        parent = nullptr;
+      } else {
+        if (p == g->l_child) {
+          g->set_l_child(this);
+        } else {
+          assert (p == g->r_child);
+          g->set_r_child(this);
+        }
+      }
+      if (this == p->l_child) {
+        p->set_l_child(r_child);
+        set_r_child(p);
+      } else {
+        assert (this == p->r_child);
+        p->set_r_child(l_child);
+        set_l_child(p);
+      }
+      p->update();
+      update();
+    }
+    void set_l_child(Node* x) {
+      l_child = x;
+      if (x != nullptr) {
+        x->parent = this;
+      }
+    }
+    void set_r_child(Node* x) {
+      r_child = x;
+      if (x != nullptr) {
+        x->parent = this;
+      }
+    }
+    Node* find_ith(int i) {
+      update();
+      if (i >= size) return nullptr;
+      int idx = 0;
+      if (l_child != nullptr) {
+        idx += l_child->size;
+      }
+      if (idx < i) {
+        return r_child->find_ith(i - idx - 1);
+      }
+      if (idx > i) {
+        return l_child->find_ith(i);
+      }
+      return this;
+    }
+    Node* cut_l_child() {
+      auto p = l_child;
+      if (p != nullptr) {
+        p->parent = nullptr;
+      }
+      l_child = nullptr;
+      update();
+      return p;
+    }
+    Node* cut_r_child() {
+      auto p = r_child;
+      if (p != nullptr) {
+        p->parent = nullptr;
+      }
+      r_child = nullptr;
+      update();
+      return p;
+    }
+    void print(int indent) const {
+      for (auto i = 0; i < indent; ++ i) {
+        cout << "  ";
+      }
+      printf ("d: %p s: %d\n", this, size);
+      for (auto i = 0; i < indent; ++ i) {
+        cout << "  ";
+      }
+      printf (" l_child:\n");
+      if (l_child != nullptr) l_child->print(indent + 1);
+      for (auto i = 0; i < indent; ++ i) {
+        cout << "  ";
+      }
+      printf (" r_child:\n");
+      if (r_child != nullptr) r_child->print(indent + 1);
+    }
+  };
+  vector<Node> pool;
+  vector<Node*> ptrs;
+  int next_idx;
+  Node* root;
+  void splay(Node* x) {
+    while (!x->is_root()) {
+      if (x->parent->is_root()) {
+        x->rotate();
+      } else {
+        auto p = x->parent;
+        auto g = p->parent;
+        if ((x == p->l_child && p == g->l_child) ||
+            (x == p->r_child && p == g->r_child)) {
+          p->rotate();
+          x->rotate();
+        } else {
+          x->rotate();
+          x->rotate();
+        }
+      }
+    }
+    root = x;
+  }
+  Node* find_ith(int i) {
+    auto p = root->find_ith(i);
+    assert (p != nullptr);
+    splay(p);
+    return p;
+  }
+  void init(int n) {
+    pool.resize(n);
+    ptrs.resize(n);
+    next_idx = 0;
+    root = make_tree(0, n - 1);
+  }
+  Node* new_node(int data) {
+    auto p = &pool[next_idx ++];
+    return p->init();
+  }
+  Node* make_tree(int l, int r) {
+    if (l > r) return nullptr;
+    auto m = (l + r) / 2;
+    auto p = new_node(m);
+    ptrs[m] = p;
+    p->set_l_child(make_tree(l, m - 1));
+    p->set_r_child(make_tree(m + 1, r));
+    p->update();
+    return p;
+  }
+  void print() {
+    root->print(0);
+  }
+  int get_rank(int a) {
+    V<Node*> ps;
+    for (auto p = ptrs[a]; p != nullptr; p = p->parent) {
+      ps.push_back(p);
+    }
+    for (auto i = ps.size(); i > 0; i --) {
+      ps[i - 1]->update();
+    }
+    // now everything is up to date in the path
+    splay(ptrs[a]);
+    return ptrs[a]->l_child != nullptr ? ptrs[a]->l_child->size : 0;
+  }
+};
+endsnippet
+
+snippet PERSIST_SEGTREE "persistance segment tree" b
+struct SegmentTree {
+  template<typename T>
+  struct Pool {
+    vector<T> pool;
+    size_t last;
+    void init(size_t pool_size) {
+      pool.clear();
+      pool.resize(pool_size);
+      last = 0;
+    }
+    template<typename... Ts>
+    T* get_node(Ts... args) {
+      assert (last < pool.size());
+      auto idx = last;
+      last ++;
+      return (this->pool)[idx].init(args...);
+    }
+  };
+  struct Node {
+    Node* l_child;
+    Node* r_child;
+    size_t l_idx;
+    size_t r_idx;
+    LL value;
+    Node* init(const size_t& l, const size_t& r, Node* pl, Node* pr) {
+      l_idx = l;
+      r_idx = r;
+      value = 0;
+      l_child = pl;
+      r_child = pr;
+      return this;
+    }
+    Node* init(const size_t& l, const size_t& r, Pool<Node>* pool) {
+      assert(l <= r);
+      l_idx = l;
+      r_idx = r;
+      value = 0;
+      if (l == r) {
+        l_child = r_child = nullptr;
+      } else {
+        auto m = (l + r) / 2;
+        l_child = pool->get_node(l, m, pool);
+        r_child = pool->get_node(m + 1, r, pool);
+      }
+      return this;
+    }
+    Node* update(size_t idx, LL v, Pool<Node>* pool) const {
+      if (l_idx == idx && r_idx == idx) {
+        auto p = pool->get_node(idx, idx, nullptr, nullptr);
+        p->value = v;
+        return p;
+      }
+      auto m = (l_idx + r_idx) / 2;
+      auto pl = l_child;
+      auto pr = r_child;
+      if (idx <= m) { // in left
+        pl = l_child->update(idx, v, pool);
+      } else { // in right
+        pr = r_child->update(idx, v, pool);
+      }
+      auto p = pool->get_node(l_idx, r_idx, pl, pr);
+      p->value = max(value, v);
+      return p;
+    }
+    LL query(size_t l, size_t r) const {
+      if (l_idx == l && r_idx == r) {
+        return value;
+      }
+      auto m = (l_idx + r_idx) / 2;
+      if (l > m) { // all in right
+        return r_child->query(l, r);
+      } else if (r <= m) { // all in left
+        return l_child->query(l, r);
+      } else {
+        auto l_ret = l_child->query(l, m);
+        auto r_ret = r_child->query(m + 1, r);
+        if (l_ret < r_ret) {
+          return r_ret;
+        } else {
+          return l_ret;
+        }
+      }
+    }
+  };
+  Pool<Node> pool;
+  Node* root; // cache the latest root
+  Node* init(size_t n) {
+    return root = pool.get_node(0, n - 1, &pool);
+  }
+  void init_pool(size_t n) {
+    pool.init(n);
+  }
+  Node* update(size_t idx, LL v) {
+    return root = update(root, idx, v);
+  }
+  Node* update(Node* p, size_t idx, LL v) {
+    return p->update(idx, v, &pool);
+  }
+  LL query(size_t l, size_t r) {
+    return root->query(l, r);
+  }
+};
+endsnippet
+
+snippet SEGTREE "segment tree" b
+struct SegmentTree {
+  template<typename T>
+  struct Pool {
+    vector<T> pool;
+    size_t last;
+    void init(size_t pool_size) {
+      pool.clear();
+      pool.resize(pool_size);
+      last = 0;
+    }
+    template<typename... Ts>
+    T* get_node(Ts... args) {
+      assert (last < pool.size());
+      auto idx = last;
+      last ++;
+      return (this->pool)[idx].init(args...);
+    }
+  };
+  struct Node {
+    Node* l_child;
+    Node* r_child;
+    size_t l_idx;
+    size_t r_idx;
+    LL value;
+    LL max_idx;
+    Node* init(const size_t& l, const size_t& r, Pool<Node>* pool) {
+      assert(l <= r);
+      l_idx = l;
+      r_idx = r;
+      value = 0;
+      if (l == r) {
+        max_idx = l;
+        l_child = r_child = nullptr;
+      } else {
+        auto m = (l + r) / 2;
+        l_child = pool->get_node(l, m, pool);
+        r_child = pool->get_node(m + 1, r, pool);
+        max_idx = m;
+      }
+      return this;
+    }
+    void update(size_t idx, LL v) {
+      if (l_idx == idx && r_idx == idx) {
+        value = v;
+        return;
+      }
+      auto m = (l_idx + r_idx) / 2;
+      if (idx <= m) { // in left
+        l_child->update(idx, v);
+      } else { // in right
+        r_child->update(idx, v);
+      }
+      if (value < v) {
+        value = v;
+        max_idx = idx;
+      }
+    }
+    LL query(size_t l, size_t r) const {
+      if (l_idx == l && r_idx == r) {
+        return value;
+      }
+      auto m = (l_idx + r_idx) / 2;
+      if (l > m) { // all in right
+        return r_child->query(l, r);
+      } else if (r <= m) { // all in left
+        return l_child->query(l, r);
+      } else {
+        auto l_ret = l_child->query(l, m);
+        auto r_ret = r_child->query(m + 1, r);
+        if (l_ret < r_ret) {
+          return r_ret;
+        } else {
+          return l_ret;
+        }
+      }
+    }
+  };
+  Pool<Node> pool;
+  Node* root;
+  void init(size_t n) {
+    pool.init(n * 2 + 20);
+    root = pool.get_node(0, n - 1, &pool);
+  }
+  void update(size_t idx, LL v) {
+    root->update(idx, v);
+  }
+  LL query(size_t l, size_t r) {
+    return root->query(l, r);
+  }
+};
+endsnippet
+
+snippet DisjointSet "Disjoint Set" b
+struct DisjointSet {
+	V<int> _parents;
+	V<int> _heights;
+	void init(int n) {
+		_parents.resize(n);
+		_heights.resize(n);
+		for (auto i = 0; i < n; ++ i) {
+			_parents[i] = i;
+			_heights[i] = 0;
+		}
+	}
+
+	int parent(int x) {
+		if (_parents[x] == x) {
+			return x;
+		}
+		return (_parents[x] = parent(_parents[x]));
+	}
+
+	void join(int x, int y) {
+		auto px = parent(x);
+		auto py = parent(y);
+		if (px == py) return;
+		if (_heights[px] > _heights[py]) {
+			_parents[py] = px;
+		} else if (_heights[px] < _heights[py]) {
+			_parents[px] = py;
+		} else {
+			_parents[px] = py;
+			_heights[py] ++;
+		}
+	}
+};
+endsnippet
+
+snippet RMQ "range minimum query" b
+struct RMQ {
+  V<V<int>> vs;
+  V<int> logn;
+  void init(const V<int>& xs) {
+    const int n = xs.size();
+    vs.clear();
+    vs.resize(32, V<int>(n + 1));
+    logn.resize(n);
+    for (auto i = 0; i < n; ++ i) {
+      vs[0][i] = xs[i];
+    }
+    for (auto j = 1; (1 << j) <= n; ++ j) {
+      for (auto i = 0; i + (1 << j) - 1 < n; ++ i) {
+        vs[j][i] = max(vs[j - 1][i], vs[j - 1][i + (1 << (j - 1))]);
+      }
+    }
+    for (auto i = 0; i < n; ++ i) {
+      auto l = 0, r = 20;
+      while (r - l > 1) {
+        auto m = (r + l) / 2;
+        auto k = 1 << m;
+        if (k <= i + 1) {
+          l = m;
+        } else {
+          r = m;
+        }
+      }
+      logn[i] = l;
+    }
+  }
+  int query(int i, int j) {
+    const auto k = logn[j - i];
+    return max(vs[k][i], vs[k][j - (1 << k) + 1]);
+  }
+};
+endsnippet
+
+snippet PRIMES "generate primes"
+  V<int> primes;
+  const LL MAX_N = ${1:100005LL};
+#if 0
+  // ~ O(n lg lg n), but can factor each numbers in O(lg n) time
+  V<int> largestPrimeFactor(MAX_N);
+  for (auto i = 0; i < largestPrimeFactor.size(); i ++) {
+    largestPrimeFactor[i] = i;
+  }
+  for (auto i = 2; i < largestPrimeFactor.size(); ++ i) {
+    if (largestPrimeFactor[i] != i) {
+      continue;
+    }
+    primes.push_back(i);
+    for (auto j = i * 2; j < largestPrimeFactor.size(); j += i) {
+      largestPrimeFactor[j] = i;
+    }
+  }
+#else
+  // ~ O(n lg lg n), but should be slightly factor than previous one
+  V<bool> isp(MAX_N, true);
+  isp[0] = isp[1] = false;
+    for (auto p = 2; p < MAX_N; p ++) {
+    if (!isp[p]) continue;
+    primes.push_back(p);
+    for (auto q = p * (LL) p; q < MAX_N; q += p)
+      isp[q] = false;
+  }
+#endif
+endsnippet

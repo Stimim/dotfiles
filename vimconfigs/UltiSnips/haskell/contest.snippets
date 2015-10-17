@@ -1,0 +1,92 @@
+snippet HEADERS
+import Data.List as L
+import Control.Monad as M
+import Debug.Trace
+import Data.Array.IO
+
+type MInt = Int
+
+readInts :: a -> IO [MInt]
+readInts _ = do
+  line <- getLine
+  let ints = map read $ words line :: [MInt]
+  return ints
+
+readInt :: a -> IO MInt
+readInt _ = do
+  line <- getLine
+  let int = read line :: MInt
+  return int
+endsnippet
+
+snippet SegmentTree
+data SegmentTree a =
+      Leaf Int a
+    | Branch (Int, Int, Int) a (SegmentTree a) (SegmentTree a)
+
+get_v (Leaf _ v) = v
+get_v (Branch _ v _ _) = v
+
+createSegmentTree (l, r) =
+  if l == r then
+    Leaf l 0
+  else
+    let
+      tl = createSegmentTree (l, m)
+      tr = createSegmentTree (m + 1, r)
+    in
+      Branch (l, r, m) 0 tl tr
+  where
+    m = (l + r) `div` 2
+
+query ql qr (Leaf idx v) = v
+query ql qr (Branch (l, r, m) v tl tr) =
+  if v == 0 then
+    0
+  else if ql == l && qr == r then
+    v
+  else if ql > m then
+    query ql qr tr
+  else if qr <= m then
+    query ql qr tl
+  else {-- if ql - m + 1 > qr - m then --}
+    let
+      vl = query ql m tl
+    in
+      if vl == v then
+        v
+      else
+        max vl (query (m + 1) qr tr)
+
+update qidx qv (Leaf idx v) =
+  if qidx == idx then
+    Leaf idx (v + qv)
+  else
+    Leaf idx v
+
+update qidx qv (Branch (l, r, m) v tl tr) =
+  if qv == 0 then
+    (Branch (l, r, m) v tl tr)
+  else if qidx <= m then
+    let
+      tl' = update qidx qv tl
+      v' = get_v tl'
+    in
+      Branch (l, r, m) (max v v') tl' tr
+  else
+    let
+      tr' = update qidx qv tr
+      v' = get_v tr'
+    in
+      Branch (l, r, m) (max v v') tl tr'
+endsnippet
+
+snippet IOArray
+-- new array:
+--	arr <- newListArray (lbound, ubound) default_values :: IO (IOArray Dim Int)
+--	ex: newListArray ((0, 0), (17, n - 1)) ([0, 0..]) :: IO (IOArray (Int, Int) Int)
+-- read:
+--	x <- readArray arr (i, j, ...)
+-- write:
+--	writeArray arr (i, j, ...) (new_value)
+endsnippet
