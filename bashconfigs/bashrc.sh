@@ -5,25 +5,12 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-load_plugins() {
-  for f in $*; do
-    echo "loading $CONFIG_DIR/$f"
-    . $CONFIG_DIR/$f
-  done
-}
-
-load_plugins history.bash aliases.bash
-
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-load_plugins prompt.bash
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -59,3 +46,13 @@ export PATH
 
 #export TERM=xterm-256color
 
+CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+load_plugins() {
+  for f in $*; do
+    echo "loading $CONFIG_DIR/$f"
+    . $CONFIG_DIR/$f
+  done
+}
+
+load_plugins history.bash aliases.bash prompt.bash
