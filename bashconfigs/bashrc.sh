@@ -15,8 +15,20 @@ shopt -s checkwinsize
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-  . /etc/bash_completion
+if ! shopt -oq posix ; then
+  if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+  fi
+  # for mac
+  if [ -f /usr/local/git/current/share/git-core/git-completion.bash ]; then
+    echo source /usr/local/git/current/share/git-core/git-completion.bash
+    source /usr/local/git/current/share/git-core/git-completion.bash
+  fi
+  # for ubuntu
+  if [ -f /usr/share/bash-completion/completions/git ]; then
+    echo source /usr/share/bash-completion/completions/git
+    source /usr/share/bash-completion/completions/git
+  fi
 fi
 
 add_to_path() {
