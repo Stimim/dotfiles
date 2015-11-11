@@ -60,3 +60,6 @@ let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex -interaction=nonstopmode $*'
 
 let g:ycm_global_ycm_extra_conf='~/.vim/stimim/ycm/ycm_extra_conf.py'
+
+set list
+set listchars=tab:»·,trail:·
