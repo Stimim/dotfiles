@@ -1,5 +1,7 @@
 set nocompatible
 
+let mapleader = ","
+
 source ~/.vim/stimim/bundles.vim
 
 set expandtab
@@ -47,8 +49,6 @@ map <C-l> <C-w>l
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
-
-let mapleader = ","
 
 set ignorecase
 set smartcase
