@@ -1,5 +1,7 @@
 set nocompatible
 
+let mapleader = ","
+
 source ~/.vim/stimim/bundles.vim
 
 set expandtab
@@ -48,8 +50,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 
-let mapleader = ","
-
 set ignorecase
 set smartcase
 "set foldmethod=syntax
@@ -60,3 +60,6 @@ let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex -interaction=nonstopmode $*'
 
 let g:ycm_global_ycm_extra_conf='~/.vim/stimim/ycm/ycm_extra_conf.py'
+
+set list
+set listchars=tab:»·,trail:·

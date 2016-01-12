@@ -35,6 +35,7 @@
 
 [alias]
   ci = commit
+  ca = commit --amend
   co = checkout
   st = status
   dw = diff --color-words

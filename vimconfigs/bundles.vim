@@ -17,11 +17,12 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'hallison/vim-markdown'
 
 Plugin 'scrooloose/nerdtree'
-map <C-o> :NERDTreeToggle<CR>
+map <leader>o :NERDTreeToggle<CR>
 
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_key_list_previous_completion=['<Up>']
 let g:ycm_autoclose_preview_window_after_completion=1
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 Plugin 'vim-scripts/STL-Syntax'
 
