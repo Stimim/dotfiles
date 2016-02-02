@@ -46,8 +46,12 @@ set_title() {
 }
 
 gen_prompt() {
+  local exit_code="$?"
   PS1=""
   PS1=$PS1$PS1_user'@'$PS1_host':'$(get_git_branch)$(get_fuzzy_path)
+  if [ "${exit_code}" != 0 ]; then
+    PS1="${PS1} [${RED}${exit_code}${NOR}]"
+  fi
   PS1=$PS1'\n\$ '
 
   #set_title "${USER}@${HOSTNAME}: ${PWD/$HOME/~}"
