@@ -5,6 +5,8 @@ setlocal expandtab
 setlocal textwidth=80
 setlocal wrap
 
+nnoremap <C-]> :YcmCompleter GoToDeclaration<CR>
+
 if !exists('g:ycm_chromeos_factory')
   function AddToPythonPath(path)
     if ':' . $PYTHONPATH . ':' =~ ':' . a:path . ':'
