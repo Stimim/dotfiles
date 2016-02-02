@@ -1350,3 +1350,147 @@ snippet PRIMES "generate primes"
   }
 #endif
 endsnippet
+
+snippet TRIE "nodes without branch is shrinked"
+struct Trie {
+  struct Node {
+    static constexpr size_t E_SIZE = 27;
+    static constexpr size_t UNDEF_REF = 0;
+    static constexpr char OFFSET = 'a';
+    static constexpr char END_OF_STRING = (char) (OFFSET + E_SIZE - 1);
+    static constexpr size_t DP_SIZE = 301;
+    size_t a;
+    size_t b;
+    size_t es[E_SIZE];
+    size_t dp[DP_SIZE];
+
+    void init(size_t a, size_t b) {
+      this->a = a;
+      this->b = b;
+      memset(es, 0, sizeof(es));
+      memset(dp, 0, sizeof(dp));
+    }
+
+    size_t& operator[] (char x) {
+      return es[x - OFFSET];
+    }
+
+    const size_t operator[] (char x) const {
+      return es[x - OFFSET];
+    }
+  };
+
+  V<Node> pool;
+  size_t used_size;
+  size_t root;
+  string txt;
+
+  size_t new_node(size_t a, size_t b) {
+    pool[used_size].init(a, b);
+    return used_size ++;
+  }
+  size_t new_node(const string& s) {
+    size_t head = txt.size();
+    txt += s;
+    size_t tail = txt.size();
+    return new_node(head, tail);
+  }
+  void init(int n) {
+    pool.resize(2 * n + 5);
+    used_size = 1;
+    root = 0;
+  }
+  void insert(const string& in) {
+    if (!root) {
+      txt = in;
+      txt.push_back(Node::END_OF_STRING);
+      root = new_node(0, 0);
+      pool[root][txt[0]] = new_node(0, txt.size());
+      return;
+    }
+    size_t head = 0;
+    string s = in;
+    s.push_back(Node::END_OF_STRING);
+    size_t tail = s.size();
+    // start from root, looking for path == s
+    size_t v = root;
+    for (; head < tail;) {
+      if (pool[v][s[head]] == Node::UNDEF_REF) {
+        pool[v][s[head]] = new_node(s.substr(head, tail - head));
+        break;
+      }
+      auto u = pool[v][s[head]];
+      size_t match_len = 0;
+      for (auto i = pool[u].a; i < pool[u].b && head + match_len < tail; ++ i) {
+        if (s[head + match_len] == txt[i]) {
+          match_len ++;
+        } else {
+          break;
+        }
+      }
+      if (match_len == pool[u].b - pool[u].a) {
+        v = u;
+        head += match_len;
+        continue;
+      }
+      auto mid = new_node(pool[u].a, pool[u].a + match_len);
+      pool[v][s[head]] = mid;
+      pool[mid][txt[pool[u].a + match_len]] = u;
+      pool[u].a += match_len;
+      head += match_len;
+      pool[mid][s[head]] = new_node(s.substr(head, tail - head));
+      head = tail;
+    }
+  }
+  // An example of DP on tree
+  size_t dp(int k, int v = 1) {
+    const size_t INF = 100000000000000LL;
+    for (auto i = 0; i < Node::DP_SIZE; ++ i) {
+      pool[v].dp[i] = INF;
+    }
+    pool[v].dp[0] = 0;
+    if (pool[v].b && txt[pool[v].b - 1] == Node::END_OF_STRING) {
+      pool[v].dp[1] = 0;
+    } else {
+      bool first = true;
+      for (auto i = 0; i < Node::E_SIZE; ++ i) {
+        auto u = pool[v].es[i];
+        if (u == Node::UNDEF_REF) continue;
+        dp(k, u);
+        if (first) {
+          memcpy(pool[v].dp, pool[u].dp, sizeof(pool[u].dp));
+          first = false;
+          continue;
+        }
+        for (auto i = k; i > 0; -- i) {
+          auto cost = pool[v].dp[i];
+          for (auto j = 0; j < i; ++ j) {
+            cost = min(cost, min(pool[v].dp[j] + pool[u].dp[i - j], INF));
+          }
+          pool[v].dp[i] = cost;
+        }
+      }
+    }
+    for (auto i = 1; i <= k; ++ i) {
+      pool[v].dp[i] += pool[v].b - pool[v].a;
+      if (pool[v].dp[i] > INF) {
+        pool[v].dp[i] = INF;
+      }
+    }
+    return pool[v].dp[k];
+  }
+  void print(int v = 1, int indent = 0) const {
+    for (auto i = 0; i < indent; ++ i) {
+      cout << "  ";
+    }
+    cout << "(" << v << ") ";
+    cout << txt.substr(pool[v].a, pool[v].b - pool[v].a) << endl;
+    for (auto i = 0; i < Node::E_SIZE; ++ i) {
+      auto u = pool[v].es[i];
+      if (u != Node::UNDEF_REF) {
+        print(u, indent + 1);
+      }
+    }
+  }
+};
+endsnippet
