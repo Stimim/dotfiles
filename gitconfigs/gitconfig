@@ -34,6 +34,7 @@
   excludesfile = ~/dotfiles/gitconfigs/gitignore
 
 [alias]
+  au = add -u
   ci = commit
   ca = commit --amend
   co = checkout
@@ -41,6 +42,8 @@
   dw = diff --color-words
   di = diff
   br = branch
+  ri = rebase -i
+  rc = rebase --continue
   lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
   # Show files ignored by git:
   ign = ls-files -o -i --exclude-standard
