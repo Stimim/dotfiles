@@ -44,6 +44,8 @@ let g:UltiSnipsListSnippets="<F3>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
+Plugin 'Shougo/unite.vim'
+
 " color schemes
 " Plugin 'Lokaltog/vim-distinguished'
 
