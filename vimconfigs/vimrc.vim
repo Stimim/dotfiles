@@ -28,6 +28,9 @@ set bg=dark
 
 " detect if we are in a tmux session
 let g:in_tmux = !empty($TMUX)
+if g:in_tmux
+  set term=xterm-256color
+endif
 
 if $TERM == 'linux'  " console only supports 8 bit colors.
   set t_Co=8
@@ -41,6 +44,9 @@ map <C-L> <C-W>l
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-H> <C-W>h
+
+nmap <A-RIGHT> :bn!<CR>
+nmap <A-LEFT> :bN!<CR>
 
 set ignorecase
 set smartcase
