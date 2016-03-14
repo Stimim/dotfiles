@@ -35,7 +35,6 @@ if !exists('g:ycm_chromeos_factory')
                            \ private_dir_suffix
 
       call AddToPythonPath(public_pkg)
-      " echo 'add ' . public_pkg . ' to PYTHONPATH'
 
       let overlay = matchlist(filepath, '\/\(overlay-[^-]*\)')[1]
       let private_pkg = public_dir . '/' . overlay . '/py_pkg'

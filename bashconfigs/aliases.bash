@@ -22,3 +22,5 @@ alias l='ls -CF'
 #alias rm='rm -I'
 
 alias tmux='TERM=xterm-256color tmux'
+alias ru='repo upload . -t --cbr'
+alias rr='repo rebase .'
