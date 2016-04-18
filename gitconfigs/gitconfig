@@ -40,7 +40,7 @@
   co = checkout
   st = status
   dw = diff --color-words
-  di = diff
+  df = diff
   br = branch
   ri = rebase -i
   rc = rebase --continue
