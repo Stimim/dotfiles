@@ -44,7 +44,7 @@
   br = branch
   ri = rebase -i
   rc = rebase --continue
-  lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+  lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %cr%Creset'
   # Show files ignored by git:
   ign = ls-files -o -i --exclude-standard
 
