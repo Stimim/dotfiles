@@ -12,12 +12,8 @@ Plugin 'tpope/vim-sensible'
 
 " language supports
 Plugin 'tmux-plugins/vim-tmux'
-Plugin 'hallison/vim-markdown'
 Plugin 'pangloss/vim-javascript'
 Plugin 'vim-scripts/STL-Syntax'
-"Plugin 'vim-scripts/LaTeX-Suite-aka-Vim-LaTeX'
-"let g:Tex_DefaultTargetFormat='pdf'
-"let g:Tex_CompileRule_pdf='xelatex -interaction=nonstopmode $*'
 
 Plugin 'vim-scripts/haskell.vim'
 
@@ -46,8 +42,15 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 Plugin 'Shougo/unite.vim'
 
-" color schemes
-" Plugin 'Lokaltog/vim-distinguished'
+" lint python files
+Plugin 'scrooloose/syntastic'
+" let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ["pylint"]
+let g:syntastic_python_pylint_args = "--rcfile=/mnt/host/source/src/platform/factory/pylintrc"
+
+Plugin 'mileszs/ack.vim'
+let g:ackprg = 'ag --vimgrep'
 
 call vundle#end()
 
