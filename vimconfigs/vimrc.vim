@@ -53,6 +53,9 @@ set smartcase
 set foldmethod=syntax
 set foldlevel=99
 set title
+set cursorline
 
 set list
 set listchars=tab:»·,trail:·
+
+call localrc#load()
