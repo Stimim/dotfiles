@@ -42,6 +42,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 Plugin 'Shougo/unite.vim'
 
+Plugin 'LnL7/vim-nix'
+
 " lint python files
 Plugin 'scrooloose/syntastic'
 " let g:syntastic_auto_loc_list = 1
