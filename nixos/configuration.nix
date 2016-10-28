@@ -33,11 +33,12 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    # only essential, widely used packages should be here,
+    # task specific packages (gcc, python, ...) should be placed in default.nix
+    # of each directories (root of project folders)
     bashCompletion
     chromium
-    gcc
     git
-    python
     tmux
     vim  # TODO: enable python
   ];
