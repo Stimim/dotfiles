@@ -39,9 +39,13 @@
     bashCompletion
     chromium
     git
+    python
     tmux
-    vim  # TODO: enable python
+    vim_configurable
   ];
+
+  # To disable python in vim:
+  # nixpkgs.config.vim.python = false;
 
   # font setup
   fonts = {
