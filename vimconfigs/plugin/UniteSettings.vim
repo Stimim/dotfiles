@@ -1,5 +1,9 @@
 " In this file, we setup our key mappings and settings for Unite plugin
 
+if !exists('g:loaded_unite')
+  finish
+endif
+
 " enable fuzzy matching
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 

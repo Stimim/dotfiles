@@ -1,0 +1,6 @@
+XTerm*reverseVideo: on
+XTerm*faceName: Ubuntu Mono:antialias=false:size=10
+*VT100*eightBitControl: false
+*VT100*eightBitInput: false
+*VT100*eightBitOutput: true
+*VT100*utf8: 1
