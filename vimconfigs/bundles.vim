@@ -10,6 +10,8 @@ Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
 
+Plugin 'plasticboy/vim-markdown'
+
 " language supports
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'pangloss/vim-javascript'

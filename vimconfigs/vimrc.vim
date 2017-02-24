@@ -58,5 +58,6 @@ set cursorline
 
 set list
 set listchars=tab:»·,trail:·
+set winwidth=85
 
 call localrc#load()
