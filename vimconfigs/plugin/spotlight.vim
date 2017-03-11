@@ -10,23 +10,31 @@ highlight Spotlight8 ctermfg=0 ctermbg=173
 highlight Spotlight9 ctermfg=0 ctermbg=255
 
 
-let s:spotlight_matches = [
-      \ matchadd("Spotlight0", "Spotlight0"),
-      \ matchadd("Spotlight1", "Spotlight1"),
-      \ matchadd("Spotlight2", "Spotlight2"),
-      \ matchadd("Spotlight3", "Spotlight3"),
-      \ matchadd("Spotlight4", "Spotlight4"),
-      \ matchadd("Spotlight5", "Spotlight5"),
-      \ matchadd("Spotlight6", "Spotlight6"),
-      \ matchadd("Spotlight7", "Spotlight7"),
-      \ matchadd("Spotlight8", "Spotlight8"),
-      \ matchadd("Spotlight9", "Spotlight9") ]
+call matchadd("Spotlight0", "Spotlight0")
+call matchadd("Spotlight1", "Spotlight1")
+call matchadd("Spotlight2", "Spotlight2")
+call matchadd("Spotlight3", "Spotlight3")
+call matchadd("Spotlight4", "Spotlight4")
+call matchadd("Spotlight5", "Spotlight5")
+call matchadd("Spotlight6", "Spotlight6")
+call matchadd("Spotlight7", "Spotlight7")
+call matchadd("Spotlight8", "Spotlight8")
+call matchadd("Spotlight9", "Spotlight9")
+
+
+function spotlight#ClearSpotlight(i)
+  for group in getmatches()
+    if group["group"] == "Spotlight" . a:i
+      call matchdelete(group["id"])
+    endif
+  endfor
+endfunction
 
 
 function spotlight#SetSpotlight(i)
   let pattern = @/
-  let ignored = matchdelete(s:spotlight_matches[a:i])
-  let s:spotlight_matches[a:i] = matchadd("Spotlight" . a:i, pattern)
+  call spotlight#ClearSpotlight(a:i)
+  call matchadd("Spotlight" . a:i, pattern)
 endfunction
 
 

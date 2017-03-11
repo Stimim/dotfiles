@@ -52,7 +52,6 @@ export SVN_EDITOR=vim
 
 add_to_path /sbin
 add_to_path ~/.local/bin
-add_to_path ~/android-sdks/platform-tools
 
 export PATH
 
