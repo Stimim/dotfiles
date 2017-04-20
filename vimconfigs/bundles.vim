@@ -23,9 +23,7 @@ Plugin 'scrooloose/nerdtree'
 map <leader>o :NERDTreeToggle<CR>
 
 Plugin 'Valloric/YouCompleteMe'
-let g:ycm_key_list_previous_completion=['<Up>']
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_global_ycm_extra_conf='~/.vim/stimim/ycm/ycm_extra_conf.py'
 " I also map <C-[> to GoToDeclaration for C and python
 nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
 
@@ -54,6 +52,7 @@ let g:syntastic_python_checkers = ["pylint"]
 
 Plugin 'mileszs/ack.vim'
 let g:ackprg = 'ag --vimgrep'
+Plugin 'benmills/vimux'
 
 call vundle#end()
 

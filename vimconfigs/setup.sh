@@ -13,7 +13,7 @@ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 vim -u ~/.vim/stimim/bundles.vim +BundleInstall +qall
 
-cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer
+cd ~/.vim/bundle/YouCompleteMe && ./install.py # --clang-completer
 
 mkdir -p ~/.vim/after/syntax/cpp
 

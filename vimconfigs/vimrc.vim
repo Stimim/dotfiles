@@ -8,6 +8,7 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
+set nowrap
 
 set clipboard=unnamed
 
@@ -59,5 +60,8 @@ set cursorline
 set list
 set listchars=tab:»·,trail:·
 set winwidth=85
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v./
 
 call localrc#load()

@@ -88,7 +88,7 @@ setlocal tabstop=2
 setlocal softtabstop=2
 setlocal expandtab
 setlocal textwidth=80
-setlocal wrap
+setlocal nowrap
 
 setlocal cindent
 " this fixes c++11 lambda, but does not fix constructor with initializer:
