@@ -1,0 +1,3 @@
+declare -a aliases='([0]="general.aliases.bash" [1]="vim.aliases.bash" [2]="tmux.aliases.bash" [3]="git.aliases.bash")'
+declare -a completions='([0]="bash-it.completion.bash" [1]="system.completion.bash")'
+declare -a plugins='([0]="base.plugin.bash" [1]="alias-completion.plugin.bash" [2]="autojump.plugin.bash" [3]="tmux.plugin.bash")'
