@@ -1,0 +1,6 @@
+[submodule "third_party/tpm"]
+	path = third_party/tpm
+	url = git@github.com:Stimim/tpm.git
+[submodule "third_party/bash-it"]
+	path = third_party/bash-it
+	url = git@github.com:Stimim/bash-it.git
