@@ -1,69 +1,48 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#!/usr/bin/env bash
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# Path to the bash it configuration
+export BASH_IT="${HOME}/dotfiles/third_party/bash-it"
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+# Lock and Load a custom theme file
+# location /.bash_it/themes/
+export BASH_IT_THEME='stimim'
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# (Advanced): Change this to the name of your remote repo if you
+# cloned bash-it with a remote other than origin such as `bash-it`.
+# export BASH_IT_REMOTE='bash-it'
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix ; then
-  if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-  fi
-  # for mac
-  if [ -f /usr/local/git/current/share/git-core/git-completion.bash ]; then
-    echo source /usr/local/git/current/share/git-core/git-completion.bash
-    source /usr/local/git/current/share/git-core/git-completion.bash
-  fi
-  # for ubuntu
-  if [ -f /usr/share/bash-completion/completions/git ]; then
-    echo source /usr/share/bash-completion/completions/git
-    source /usr/share/bash-completion/completions/git
-  fi
-fi
+# Your place for hosting Git repos. I use this for private repos.
+export GIT_HOSTING='git@git.domain.com'
 
-add_to_path() {
-  if [ $# -le 0 ] ; then
-    echo "Missing parameter"
-    return
-  fi
-  if [ -d "$1" ] && [[ ":${PATH}:" != *:${1}:* ]] ; then
-    PATH=${PATH}:${1}
-    echo "\"$1\" is added to PATH"
-  fi
-}
+# Don't check mail when opening terminal.
+unset MAILCHECK
 
-# run auto complete
-if [ -f $HOME/.bash_complete ] ; then
-  . $HOME/.bash_complete
-fi
+# Change this to your console based IRC client of choice.
+export IRC_CLIENT='irssi'
+
+# Set this to the command you use for todo.txt-cli
+export TODO="t"
+
+# Set this to false to turn off version control status checking within the prompt for all themes
+export SCM_CHECK=true
+
+# Set Xterm/screen/Tmux title with only a short hostname.
+# Uncomment this (or set SHORT_HOSTNAME to something else),
+# Will otherwise fall back on $HOSTNAME.
+#export SHORT_HOSTNAME=$(hostname -s)
+
+# Set vcprompt executable path for scm advance info in prompt (demula theme)
+# https://github.com/djl/vcprompt
+#export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
+
+# (Advanced): Uncomment this to make Bash-it reload itself automatically
+# after enabling or disabling aliases, plugins, and completions.
+# export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
 
 export EDITOR=vim
 export SVN_EDITOR=vim
 
-add_to_path /sbin
-add_to_path ~/.local/bin
+export BASH_IT_CUSTOM="${HOME}/dotfiles/bashconfigs/custom"
 
-export PATH
-
-#export TERM=xterm-256color
-
-CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-load_plugins() {
-  for f in $*; do
-    echo "loading $CONFIG_DIR/$f"
-    . $CONFIG_DIR/$f
-  done
-}
-
-load_plugins history.bash aliases.bash prompt.bash
+# Load Bash It
+source "${BASH_IT}/bash_it.sh"
