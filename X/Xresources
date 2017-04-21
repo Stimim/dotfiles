@@ -1,6 +1,16 @@
+Xft.dpi: 100
+Xft.rgba: rgb
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+
 XTerm*reverseVideo: on
-XTerm*faceName: Ubuntu Mono:antialias=false:size=10
+XTerm*faceName: Ubuntu Mono:antialias=true:size=10
 *VT100*eightBitControl: false
 *VT100*eightBitInput: false
 *VT100*eightBitOutput: true
 *VT100*utf8: 1
+
+Xautolock.time: 5
+Xautolock.locker: i3lock --color=000000
+Xautolock.secure: true

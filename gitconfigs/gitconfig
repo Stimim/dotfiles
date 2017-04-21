@@ -1,6 +1,6 @@
 [user]
-  name  = Stimim
-  email = death1048576@gmail.com
+  name  = Wei-Han Chen
+  email = stimim@google.com
 
 [color]
   diff   = auto
@@ -55,3 +55,5 @@
 # vim:set ft=gitconfig:
 [push]
 	default = simple
+[http]
+	cookiefile = /home/stimim/.gitcookies

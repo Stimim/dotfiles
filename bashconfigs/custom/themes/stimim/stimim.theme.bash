@@ -52,6 +52,5 @@ stimim::save_history() {
   history -r
 }
 
-PS1='$(stimim::gen_prompt)'
-
+# PS1='$(stimim::gen_prompt)'
 safe_append_prompt_command stimim::gen_prompt
