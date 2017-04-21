@@ -21,8 +21,6 @@ augroup LoadTemplate
   autocmd BufNewFile *.rb 0r ~/.vim/stimim/templates/rb.tpl
 augroup END
 
-set colorcolumn=80
-
 set t_Co=256
 set t_RV=     " https://github.com/vim-airline/vim-airline/issues/1025
 set bg=dark
