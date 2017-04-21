@@ -54,6 +54,8 @@ Plugin 'mileszs/ack.vim'
 let g:ackprg = 'ag --vimgrep'
 Plugin 'benmills/vimux'
 
+Plugin 'christoomey/vim-tmux-navigator'
+
 call vundle#end()
 
 filetype plugin indent on

@@ -39,11 +39,8 @@ endif
 " highlight search
 set hls
 
-" move between windows
-map <C-L> <C-W>l
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-H> <C-W>h
+map <C-W>\| <C-W>v
+map <C-W>- <C-W>s
 
 nmap <A-RIGHT> :bn!<CR>
 nmap <A-LEFT> :bN!<CR>
