@@ -56,7 +56,12 @@ set list
 set listchars=tab:»·,trail:·
 set winwidth=85
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+set number
+set relativenumber
+highlight LineNr ctermfg=grey
+nnoremap <C-N> :set number!<CR>:set relativenumber!<CR>
+
+highlight OverLength ctermbg=red ctermfg=white
 match OverLength /\%81v./
 
 call localrc#load()
