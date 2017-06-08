@@ -55,6 +55,7 @@ let g:ackprg = 'ag --vimgrep'
 Plugin 'benmills/vimux'
 
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()
 

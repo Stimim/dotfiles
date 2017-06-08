@@ -61,7 +61,6 @@ set relativenumber
 highlight LineNr ctermfg=grey
 nnoremap <C-N> :set number!<CR>:set relativenumber!<CR>
 
-highlight OverLength ctermbg=red ctermfg=white
-match OverLength /\%81v./
+set colorcolumn=+1
 
 call localrc#load()

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# If not running interactively, don't do anything
+if [[ $- != *i* ]]; then return; fi
+
 # Path to the bash it configuration
 export BASH_IT="${HOME}/dotfiles/third_party/bash-it"
 
