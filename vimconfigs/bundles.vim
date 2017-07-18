@@ -56,6 +56,7 @@ Plugin 'benmills/vimux'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'majutsushi/tagbar'
+Plugin 'Yggdroot/indentLine'
 
 call vundle#end()
 
