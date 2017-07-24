@@ -12,6 +12,7 @@ add_to_path() {
 }
 
 add_to_path /sbin
+add_to_path /usr/sbin
 add_to_path ~/.local/bin
 add_to_path ~/depot_tools
 
