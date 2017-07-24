@@ -12,6 +12,6 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#custom#source('buffer,file,file_rec', 'sorters', 'sorter_length')
 
 " search files
-nnoremap <leader>f :<C-u>Unite -start-insert file_rec<CR>
+" nnoremap <leader>f :<C-u>Unite -start-insert file_rec<CR>
 " search buffers
-nnoremap <leader>b :<C-u>Unite -start-insert buffer<CR>
+" nnoremap <leader>b :<C-u>Unite -start-insert buffer<CR>

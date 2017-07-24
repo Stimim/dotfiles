@@ -40,7 +40,7 @@ let g:UltiSnipsListSnippets="<F3>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
-Plugin 'Shougo/unite.vim'
+" Plugin 'Shougo/unite.vim'
 
 Plugin 'LnL7/vim-nix'
 
@@ -57,6 +57,12 @@ Plugin 'benmills/vimux'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'majutsushi/tagbar'
 Plugin 'Yggdroot/indentLine'
+
+Plugin 'ctrlpvim/ctrlp.vim'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+nnoremap <leader>f :CtrlPMixed<CR>
 
 call vundle#end()
 
