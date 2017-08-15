@@ -57,6 +57,7 @@ Plugin 'benmills/vimux'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'majutsushi/tagbar'
 Plugin 'Yggdroot/indentLine'
+let g:indentLine_fileTypeExclude = ['json', 'markdown']
 
 Plugin 'ctrlpvim/ctrlp.vim'
 if executable('ag')
