@@ -30,14 +30,12 @@ PS1_user=${bold_green}'\u'${normal}
 PS1_host=${bold_yellow}'\h'${normal}
 PS1_dir=${bold_blue}'\W'${normal}
 
-safe_append_prompt_command gen_prompt
-
 SCM_THEME_PROMPT_PREFIX='['
 SCM_THEME_PROMPT_SUFFIX='] '
 SCM_THEME_PROMPT_CLEAN_COLOR="${bold_green}"
 SCM_THEME_PROMPT_DIRTY_COLOR="${bold_red}"
 
-gen_prompt() {
+stimim::gen_prompt() {
   local exit_code="$?"
 
   # save history
@@ -51,3 +49,5 @@ gen_prompt() {
   fi
   PS1=$PS1"${normal}"'\n\$ '
 }
+
+safe_append_prompt_command stimim::gen_prompt
