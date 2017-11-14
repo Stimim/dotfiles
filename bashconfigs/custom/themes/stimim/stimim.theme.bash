@@ -38,16 +38,20 @@ SCM_THEME_PROMPT_DIRTY_COLOR="${bold_red}"
 stimim::gen_prompt() {
   local exit_code="$?"
 
-  # save history
-  history -a
-  history -c
-  history -r
-
   PS1=$PS1_user'@'$PS1_host':'$(__stimim_scm_prompt)$(__stimim_cwd_prompt)
   if [ "${exit_code}" != 0 ]; then
     PS1="${PS1} [${bold_red}${exit_code}${normal}]"
   fi
   PS1=$PS1"${normal}"'\n\$ '
 }
+
+stimim::save_history() {
+  # save history
+  history -a
+  history -c
+  history -r
+}
+
+PS1='$(stimim::gen_prompt)'
 
 safe_append_prompt_command stimim::gen_prompt

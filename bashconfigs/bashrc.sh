@@ -51,3 +51,7 @@ export BASH_IT_CUSTOM="${HOME}/dotfiles/bashconfigs/custom"
 
 # Load Bash It
 source "${BASH_IT}/bash_it.sh"
+
+# override C-w behavior
+stty werase undef
+bind '\C-w:unix-filename-rubout'
