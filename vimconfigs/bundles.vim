@@ -16,6 +16,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'pangloss/vim-javascript'
 Plugin 'vim-scripts/STL-Syntax'
+Plugin 'leafgarland/typescript-vim'
 
 Plugin 'vim-scripts/haskell.vim'
 
