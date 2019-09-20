@@ -4,10 +4,8 @@ filetype off  " required by vundle
 " set rtp+=~/.vim/bundle/vundle
 set rtp+=~/.vim/stimim
 
-" call vundle#begin()
 call plug#begin('~/.vim/bundle/')
 
-" Plug 'gmarik/vundle'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 
@@ -41,8 +39,6 @@ let g:UltiSnipsExpandTrigger="<c-]>"
 let g:UltiSnipsListSnippets="<F3>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-" Plug 'Shougo/unite.vim'
 
 Plug 'LnL7/vim-nix'
 
