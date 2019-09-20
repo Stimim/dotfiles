@@ -1,71 +1,72 @@
 set nocompatible
 filetype off  " required by vundle
 
-set rtp+=~/.vim/bundle/vundle
+" set rtp+=~/.vim/bundle/vundle
 set rtp+=~/.vim/stimim
 
-call vundle#begin()
+" call vundle#begin()
+call plug#begin('~/.vim/bundle/')
 
-Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
+" Plug 'gmarik/vundle'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
 
-Plugin 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 
 " language supports
-Plugin 'tmux-plugins/vim-tmux'
-Plugin 'pangloss/vim-javascript'
-Plugin 'vim-scripts/STL-Syntax'
-Plugin 'leafgarland/typescript-vim'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'pangloss/vim-javascript'
+Plug 'vim-scripts/STL-Syntax'
+Plug 'leafgarland/typescript-vim'
 
-Plugin 'vim-scripts/haskell.vim'
+Plug 'vim-scripts/haskell.vim'
 
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 map <leader>o :NERDTreeToggle<CR>
 
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
 " I also map <C-[> to GoToDeclaration for C and python
 nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
 
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 let g:airline#extensions#tabline#enabled = 1
 
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
-Plugin 'vim-scripts/gtags.vim'
+Plug 'vim-scripts/gtags.vim'
 
-Plugin 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<c-]>"
 let g:UltiSnipsListSnippets="<F3>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
-" Plugin 'Shougo/unite.vim'
+" Plug 'Shougo/unite.vim'
 
-Plugin 'LnL7/vim-nix'
+Plug 'LnL7/vim-nix'
 
 " lint python files
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ["pylint"]
 
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 let g:ackprg = 'ag --vimgrep'
-Plugin 'benmills/vimux'
+Plug 'benmills/vimux'
 
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'majutsushi/tagbar'
-Plugin 'Yggdroot/indentLine'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'majutsushi/tagbar'
+Plug 'Yggdroot/indentLine'
 let g:indentLine_fileTypeExclude = ['json', 'markdown']
 
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 nnoremap <leader>f :CtrlPMixed<CR>
 
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
