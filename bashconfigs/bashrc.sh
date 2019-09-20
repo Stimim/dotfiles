@@ -47,6 +47,10 @@ export SCM_CHECK=true
 export EDITOR=vim
 export SVN_EDITOR=vim
 
+if command -v rg >/dev/null 2>&1 ; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+fi
+
 export BASH_IT_CUSTOM="${HOME}/dotfiles/bashconfigs/custom"
 
 # Load Bash It

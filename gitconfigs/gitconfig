@@ -56,4 +56,4 @@
 [push]
 	default = simple
 [http]
-	cookiefile = /home/stimim/.gitcookies
+	cookiefile = ~/.gitcookies
