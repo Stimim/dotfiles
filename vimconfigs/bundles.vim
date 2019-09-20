@@ -61,11 +61,11 @@ Plug 'majutsushi/tagbar'
 Plug 'Yggdroot/indentLine'
 let g:indentLine_fileTypeExclude = ['json', 'markdown']
 
-Plug 'ctrlpvim/ctrlp.vim'
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-nnoremap <leader>f :CtrlPMixed<CR>
+source /usr/share/doc/fzf/examples/plugin/fzf.vim
+Plug 'junegunn/fzf.vim'
+" Both options are optional. You don't have to install fzf in ~/.fzf
+" and you don't have to run the install script if you use fzf only in Vim.
+nmap <leader>f :Files<CR>
 
 call plug#end()
 
