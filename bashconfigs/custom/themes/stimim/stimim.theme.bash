@@ -10,6 +10,10 @@ __stimim_scm_prompt() {
   local color=""
   local scm_prompt=""
 
+  # We only use git, so let's scip checking others
+  P4_EXE=
+  HG_EXE=
+  SVN_EXE=
   # load SCM prompt variables
   scm_prompt_vars
 
