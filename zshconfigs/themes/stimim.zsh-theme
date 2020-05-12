@@ -17,6 +17,16 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED=" %{?%G%}"
 
 ZSH_THEME_GIT_PROMPT_CACHE="1"
 
+# Override preexec_udpate_git_vars function, so git_info will be reloaded
+# when "repo" command is used.
+function preexec_update_git_vars() {
+    case "$2" in
+        git*|hub*|gh*|stg*|repo*)
+        __EXECUTED_GIT_COMMAND=1
+        ;;
+    esac
+}
+
 # git status display
 local git_info='$(git_super_status)%{$reset_color%}'
 
@@ -29,20 +39,20 @@ local prompt_symbol="$"
 local prompt='${prompt_color}${prompt_symbol} %{$reset_color%}'
 
 # current directory display
-local directory_path='%{$fg[magenta]%}%~'
+local directory_path='%{$fg_bold[blue]%}$(shrink_path -f -T)'
 
+local time_info='%{$reset_color%}[%*] '
 # last command return code
 local return_code='%(?,,%{$fg_bold[red]%} [%?]%{$reset_color%})'
 
 PROMPT=$(
 <<- EOF
-${user_host}${git_info}${directory_path}${return_code}
+${time_info}${user_host}${git_info}${directory_path}${return_code}
 ${prompt}
 EOF
 )
 
-# local right_prompt_prefix="%{$fg[white]%}"
-local right_prompt_prefix="%{$reset_color%}"
+# local right_prompt_prefix="%{$reset_color%}"
 
 # right prompt definition
 # because a default one is defined in git-prompt plugin, we have to clear it if
