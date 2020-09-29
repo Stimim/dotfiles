@@ -14,12 +14,7 @@ Plug 'tpope/vim-sensible'
 Plug 'plasticboy/vim-markdown'
 
 " language supports
-Plug 'tmux-plugins/vim-tmux'
-Plug 'pangloss/vim-javascript'
-Plug 'vim-scripts/STL-Syntax'
-Plug 'leafgarland/typescript-vim'
-
-Plug 'vim-scripts/haskell.vim'
+Plug 'sheerun/vim-polyglot'
 
 Plug 'scrooloose/nerdtree'
 map <leader>o :NERDTreeToggle<CR>
@@ -87,7 +82,12 @@ endif
 Plug 'junegunn/fzf.vim'
 " Both options are optional. You don't have to install fzf in ~/.fzf
 " and you don't have to run the install script if you use fzf only in Vim.
-nmap <leader>f :Files<CR>
+nmap <leader>ff :Files<CR>
+nmap <leader>fg :GFiles<CR>
+nmap <leader>fr :Ag<CR>
+nmap <leader>fb :Buffers<CR>
+nmap <leader>fm :Marks<CR>
+nmap <leader>fw :Windows<CR>
 
 call plug#end()
 
