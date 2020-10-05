@@ -1,13 +1,7 @@
-set nocompatible
-filetype off  " required by vundle
-
-" set rtp+=~/.vim/bundle/vundle
 set rtp+=~/.vim/stimim
 
-" call vundle#begin()
 call plug#begin('~/.vim/bundle')
 
-Plug 'gmarik/vundle'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 
@@ -37,9 +31,6 @@ nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
 "let g:LanguageClient_loggingFile = '/tmp/language-client.log'
 "let g:LanguageClient_loggingLevel = 'DEBUG'
 
-Plug 'ajh17/vimcompletesme'
-
-
 Plug 'bling/vim-airline'
 let g:airline#extensions#tabline#enabled = 1
 
@@ -55,8 +46,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " Plug 'Shougo/unite.vim'
 
-Plug 'LnL7/vim-nix'
-
 " lint python files
 Plug 'scrooloose/syntastic'
 " let g:syntastic_auto_loc_list = 1
@@ -65,10 +54,13 @@ let g:syntastic_python_checkers = ["pylint"]
 
 Plug 'mileszs/ack.vim'
 let g:ackprg = 'ag --vimgrep'
-Plug 'benmills/vimux'
 
+" for tmux integration
+Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'majutsushi/tagbar'
+
+" Plug 'majutsushi/tagbar'
+
 Plug 'Yggdroot/indentLine'
 let g:indentLine_fileTypeExclude = ['json', 'markdown']
 
@@ -80,6 +72,7 @@ else
   echoerr "Cannot find fzf.vim, have you installed fzf?"
 endif
 Plug 'junegunn/fzf.vim'
+
 " Both options are optional. You don't have to install fzf in ~/.fzf
 " and you don't have to run the install script if you use fzf only in Vim.
 nmap <leader>ff :Files<CR>
@@ -90,5 +83,3 @@ nmap <leader>fm :Marks<CR>
 nmap <leader>fw :Windows<CR>
 
 call plug#end()
-
-filetype plugin indent on

@@ -28,7 +28,7 @@ set bg=dark
 
 " detect if we are in a tmux session
 let g:in_tmux = !empty($TMUX)
-if g:in_tmux
+if g:in_tmux && !has('nvim')
   set term=xterm-256color
 endif
 
