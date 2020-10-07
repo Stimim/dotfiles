@@ -6,6 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 
 Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_conceal = 0
 
 " language supports
 Plug 'sheerun/vim-polyglot'
@@ -32,10 +33,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " Plug 'Shougo/unite.vim'
 
 " lint python files
-Plug 'scrooloose/syntastic'
-" let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ["pylint"]
+"Plug 'scrooloose/syntastic'
+"" let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_python_checkers = ["pylint"]
 
 Plug 'mileszs/ack.vim'
 let g:ackprg = 'ag --vimgrep'

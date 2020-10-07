@@ -5,12 +5,9 @@ if exists("s:loaded")
 endif
 
 let s:loaded = 1
-
-setlocal indentexpr=GetGooglePythonIndent(v:lnum)
-
 let s:maxoff = 50 " maximum number of lines to look backwards.
 
-function GetGooglePythonIndent(lnum)
+function indent#python#GetGooglePythonIndent(lnum)
 
   " Indent inside parens.
   " Align with the open paren unless it is at the end of the line.
@@ -23,7 +20,7 @@ function GetGooglePythonIndent(lnum)
   "       100, 200, 300, 400)
   call cursor(a:lnum, 1)
   let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
-        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+        \ "line('.') < " . (a:lnum - s:maxoff) . " ? 0 :"
         \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
         \ . " =~ '\\(Comment\\|String\\)$'")
   if par_line > 0
@@ -38,5 +35,13 @@ function GetGooglePythonIndent(lnum)
 
 endfunction
 
-let pyindent_nested_paren="&sw*2"
-let pyindent_open_paren="&sw*2"
+if has('nvim')
+  let g:pyindent_open_paren = "shiftwidth() * 2"
+  let g:pyindent_nested_paren = "shiftwidth() * 2"
+  let g:pyindent_continue = "shiftwidth() * 2"
+else
+  let pyindent_nested_paren="&sw*2"
+  let pyindent_open_paren="&sw*2"
+
+  " setlocal indentexpr=stimim#python#GetGooglePythonIndent(v:lnum)
+endif

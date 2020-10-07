@@ -24,3 +24,5 @@ nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
 
 highlight CocFloating ctermfg=0 ctermbg=232
+
+let g:airline#extensions#coc#enabled = 1
