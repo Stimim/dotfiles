@@ -17,6 +17,8 @@ map <leader>o :NERDTreeToggle<CR>
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 source ~/.vim/stimim/coc.vim
 
+Plug 'honza/vim-snippets'
+
 Plug 'bling/vim-airline'
 let g:airline#extensions#tabline#enabled = 1
 
