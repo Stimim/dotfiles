@@ -44,6 +44,7 @@
   br = branch
   ri = rebase -i
   rc = rebase --continue
+  cc = cherry-pick --continue
   lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %cr%Creset'
   # Show files ignored by git:
   ign = ls-files -o -i --exclude-standard
@@ -59,3 +60,8 @@
 	cookiefile = ~/.gitcookies
 [rerere]
 	enabled = false
+[init]
+	defaultBranch = main
+[repo]
+	superprojectChoiceExpire = 1632320382
+	superprojectChoice = true

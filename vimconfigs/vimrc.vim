@@ -15,7 +15,7 @@ set softtabstop=2
 set tabstop=2
 set nowrap
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 augroup LoadTemplate
   autocmd!
@@ -64,8 +64,29 @@ set winwidth=85
 set number
 set relativenumber
 highlight LineNr ctermfg=grey
-nnoremap <C-N> :set number!<CR>:set relativenumber!<CR>
+nnoremap <C-N> :call StimimToggleNumber()<CR>
 
 set colorcolumn=+1
 
 call localrc#load()
+
+let g:stimim_enable_number = 1
+function StimimToggleNumber()
+  if g:stimim_enable_number == 1
+    set number!
+    set relativenumber!
+    set list!
+    set colorcolumn=
+    set listchars=
+    IndentLinesToggle
+  else
+    set number!
+    set relativenumber!
+    set list!
+    set colorcolumn=+1
+    set listchars=tab:»·,trail:·
+    IndentLinesToggle
+  endif
+
+  let g:stimim_enable_number = 1 - g:stimim_enable_number
+endfunction
