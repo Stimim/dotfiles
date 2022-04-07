@@ -26,20 +26,6 @@ Plug 'scrooloose/nerdcommenter'
 
 " Plug 'vim-scripts/gtags.vim'
 
-Plug 'SirVer/ultisnips'
-let g:UltiSnipsExpandTrigger="<c-]>"
-let g:UltiSnipsListSnippets="<F3>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-" Plug 'Shougo/unite.vim'
-
-" lint python files
-"Plug 'scrooloose/syntastic'
-"" let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_python_checkers = ["pylint"]
-
 Plug 'mileszs/ack.vim'
 let g:ackprg = 'ag --vimgrep'
 
