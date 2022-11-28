@@ -56,4 +56,6 @@ nmap <leader>fb :Buffers<CR>
 nmap <leader>fm :Marks<CR>
 nmap <leader>fw :Windows<CR>
 
+Plug 'bazelbuild/vim-ft-bzl'
+
 call plug#end()
