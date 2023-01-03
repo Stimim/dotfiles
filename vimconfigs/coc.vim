@@ -1,7 +1,10 @@
 " Copied from: https://breuer.dev/blog/top-neovim-plugins.html
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" NOTE: There's always complete item selected by default, you may want to
+" enable no select by `"suggest.noselect": true` in your configuration file
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
