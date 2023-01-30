@@ -57,5 +57,6 @@ nmap <leader>fm :Marks<CR>
 nmap <leader>fw :Windows<CR>
 
 Plug 'bazelbuild/vim-ft-bzl'
+Plug 'numkil/ag.nvim'
 
 call plug#end()
