@@ -58,5 +58,27 @@ nmap <leader>fw :Windows<CR>
 
 Plug 'bazelbuild/vim-ft-bzl'
 Plug 'numkil/ag.nvim'
+Plug 'lervag/wiki.vim'
+let g:wiki_root = '~/pkm/wiki.vim/'
+let g:wiki_journal = {
+      \ 'name': 'journal',
+      \ 'frequency': 'daily',
+      \ 'date_format': {
+        \   'daily' : '%Y/%m/%d',
+        \   'weekly' : '%Y/%m/week_%m_%d',
+        \   'monthly' : '%Y/%m/m%m',
+        \ },
+        \}
+nmap <leader>ft :WikiFzfTags<CR>
+nmap <leader>fp :WikiFzfPages<CR>
+let g:wiki_mappings_local_journal = {
+      \ '<plug>(wiki-journal-prev)' : ',p',
+      \ '<plug>(wiki-journal-next)' : ',n',
+      \}
+let g:wiki_filetypes = ['md', 'wiki']
+
+Plug 'lervag/wiki-ft.vim'
+
+Plug 'dhruvasagar/vim-table-mode'
 
 call plug#end()
