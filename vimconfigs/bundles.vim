@@ -26,8 +26,8 @@ Plug 'scrooloose/nerdcommenter'
 
 " Plug 'vim-scripts/gtags.vim'
 
-Plug 'mileszs/ack.vim'
-let g:ackprg = 'ag --vimgrep'
+" Plug 'mileszs/ack.vim'
+" let g:ackprg = 'ag --vimgrep'
 
 " for tmux integration
 Plug 'benmills/vimux'
@@ -80,5 +80,6 @@ let g:wiki_filetypes = ['md', 'wiki']
 Plug 'lervag/wiki-ft.vim'
 
 Plug 'dhruvasagar/vim-table-mode'
+" `<leader>tm` to enter table mode
 
 call plug#end()
