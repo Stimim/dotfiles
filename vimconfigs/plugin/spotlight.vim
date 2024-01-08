@@ -1,13 +1,13 @@
-highlight Spotlight0 ctermfg=0 ctermbg=177
-highlight Spotlight1 ctermfg=0 ctermbg=39
-highlight Spotlight2 ctermfg=0 ctermbg=48
-highlight Spotlight3 ctermfg=0 ctermbg=111
-highlight Spotlight4 ctermfg=0 ctermbg=210
-highlight Spotlight5 ctermfg=0 ctermbg=51
-highlight Spotlight6 ctermfg=0 ctermbg=202
-highlight Spotlight7 ctermfg=0 ctermbg=191
-highlight Spotlight8 ctermfg=0 ctermbg=173
-highlight Spotlight9 ctermfg=0 ctermbg=255
+highlight Spotlight0 guifg=0 guibg=LightCyan
+highlight Spotlight1 guifg=0 guibg=LightGreen
+highlight Spotlight2 guifg=0 guibg=LightBlue
+highlight Spotlight3 guifg=0 guibg=LightMagenta
+highlight Spotlight4 guifg=0 guibg=LightYellow
+highlight Spotlight5 guifg=0 guibg=LightGray
+highlight Spotlight6 guifg=0 guibg=LightRed
+highlight Spotlight7 guifg=0 guibg=SeaGreen
+highlight Spotlight8 guifg=0 guibg=SlateBlue
+highlight Spotlight9 guifg=0 guibg=Magenta
 
 
 call matchadd("Spotlight0", "Spotlight0")
