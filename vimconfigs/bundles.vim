@@ -5,8 +5,7 @@ call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 
-Plug 'plasticboy/vim-markdown'
-let g:vim_markdown_conceal = 0
+Plug 'ixru/nvim-markdown'
 
 " language supports
 Plug 'sheerun/vim-polyglot'
@@ -58,8 +57,6 @@ Plug 'dhruvasagar/vim-table-mode'
 
 Plug 'folke/which-key.nvim'
 
-Plug 'Pocco81/HighStr.nvim'
-
 " Colorschemes
 Plug 'ayu-theme/ayu-vim'
 Plug 'folke/tokyonight.nvim'
@@ -78,7 +75,6 @@ lua << EOF
       lualine_z = {'tabs'},
     }
   }
-  require("high-str").setup()
 EOF
 
 let g:ayucolor="dark"
