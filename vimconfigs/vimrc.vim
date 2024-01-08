@@ -27,9 +27,7 @@ augroup LoadTemplate
 augroup END
 
 set t_Co=256
-set t_RV=     " https://github.com/vim-airline/vim-airline/issues/1025
 set bg=dark
-"colorscheme distinguished
 
 " detect if we are in a tmux session
 let g:in_tmux = !empty($TMUX)
@@ -37,18 +35,22 @@ if g:in_tmux && !has('nvim')
   set term=xterm-256color
 endif
 
+if $COLORTERM == 'truecolor' || $COLORTERM == '24bit'
+  set termguicolors
+endif
+
 if $TERM == 'linux'  " console only supports 8 bit colors.
   set t_Co=8
 endif
 
 " highlight search
-set hls
+set hlsearch
 
 map <C-W>\| <C-W>v
 map <C-W>- <C-W>s
 
-nmap <A-RIGHT> :bn!<CR>
-nmap <A-LEFT> :bN!<CR>
+"nmap <A-RIGHT> :bn!<CR>
+"nmap <A-LEFT> :bN!<CR>
 
 set ignorecase
 set smartcase
@@ -90,3 +92,4 @@ function StimimToggleNumber()
 
   let g:stimim_enable_number = 1 - g:stimim_enable_number
 endfunction
+

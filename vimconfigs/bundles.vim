@@ -19,21 +19,15 @@ source ~/.vim/stimim/coc.vim
 
 Plug 'honza/vim-snippets'
 
-Plug 'bling/vim-airline'
-let g:airline#extensions#tabline#enabled = 1
+"Plug 'bling/vim-airline'
+"let g:airline#extensions#tabline#enabled = 1
+Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'scrooloose/nerdcommenter'
-
-" Plug 'vim-scripts/gtags.vim'
-
-" Plug 'mileszs/ack.vim'
-" let g:ackprg = 'ag --vimgrep'
 
 " for tmux integration
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-
-" Plug 'majutsushi/tagbar'
 
 Plug 'Yggdroot/indentLine'
 let g:indentLine_fileTypeExclude = ['json', 'markdown']
@@ -57,9 +51,35 @@ nmap <leader>fm :Marks<CR>
 nmap <leader>fw :Windows<CR>
 
 Plug 'bazelbuild/vim-ft-bzl'
-Plug 'numkil/ag.nvim'
+"Plug 'numkil/ag.nvim'
 
 Plug 'dhruvasagar/vim-table-mode'
 " `<leader>tm` to enter table mode
 
+Plug 'folke/which-key.nvim'
+
+Plug 'Pocco81/HighStr.nvim'
+
+" Colorschemes
+Plug 'ayu-theme/ayu-vim'
+Plug 'folke/tokyonight.nvim'
+
 call plug#end()
+
+" loading lua plugins
+lua << EOF
+  require("which-key").setup()
+  require("lualine").setup {
+    options = {
+      theme = 'powerline_dark',
+    },
+    tabline = {
+      lualine_a = {'buffers'},
+      lualine_z = {'tabs'},
+    }
+  }
+  require("high-str").setup()
+EOF
+
+let g:ayucolor="dark"
+colorscheme ayu
