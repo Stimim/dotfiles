@@ -66,15 +66,13 @@ call plug#end()
 " loading lua plugins
 lua << EOF
   require("which-key").setup()
-  require("lualine").setup {
-    options = {
-      theme = 'powerline_dark',
-    },
-    tabline = {
-      lualine_a = {'buffers'},
-      lualine_z = {'tabs'},
-    }
-  }
+  local lualine = require("lualine")
+  local lualine_config = lualine.get_config()
+  lualine_config.options.theme = 'powerline_dark'
+  lualine_config.tabline.lualine_a = {'buffers'}
+  lualine_config.tabline.lualine_z = {'tabs'}
+  lualine_config.sections.lualine_c = {'%F'}
+  lualine.setup(lualine_config)
 EOF
 
 let g:ayucolor="dark"

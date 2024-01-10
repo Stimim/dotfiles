@@ -46,8 +46,8 @@ endif
 " highlight search
 set hlsearch
 
-map <C-W>\| <C-W>v
-map <C-W>- <C-W>s
+"map <C-W>\| <C-W>v
+"map <C-W>- <C-W>s
 
 "nmap <A-RIGHT> :bn!<CR>
 "nmap <A-LEFT> :bN!<CR>
