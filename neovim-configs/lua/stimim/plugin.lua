@@ -2,31 +2,11 @@
 
 local M = {}
 
-function ensure_packer()
-  -- by default, vim.fn.stdpath('data') is '.local/share/nvim'
-  local plugin_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-  if vim.loop.fs_stat(plugin_path) then
-    return false
-  end
-
-  print(string.format([[packer.nvim is not installed, checking out...]]))
-  vim.fn.system({
-      'git',
-      'clone',
-      '--depth=1',
-      'https://github.com/wbthomason/packer.nvim',
-      plugin_path,
-    })
-  vim.cmd [[packadd packer.nvim]]
-  return true
-end
-
 function M.setup()
   local just_installed = ensure_packer()
-  local plugin = require('packer')
+  local plugin_manager = require('packer')
 
-  return plugin.startup(function (use)
+  return plugin_manager.startup(function (use)
     use 'wbthomason/packer.nvim'  -- packer itself
 
     use 'tpope/vim-sensible'  -- basic settings
@@ -43,9 +23,8 @@ function M.setup()
       end
     }
 
-    use {
-      'neoclide/coc.nvim', branch = 'release'
-    }
+    declare_lsp(use, false)
+
     use 'honza/vim-snippets'
 
     use {
@@ -57,6 +36,9 @@ function M.setup()
     }
 
     use 'preservim/nerdcommenter'
+    use {
+      'machakann/vim-sandwich'
+    }
 
     -- for tmux integration
     use 'benmills/vimux'
@@ -69,12 +51,20 @@ function M.setup()
       end,
     }
 
+    --use {
+      --'junegunn/fzf.vim',
+      --config = function()
+        --require('stimim.keymaps').bind_fzf()
+      --end,
+      --requires = { 'junegunn/fzf' },
+    --}
+
     use {
-      'junegunn/fzf.vim',
+      'nvim-telescope/telescope.nvim', tag = '0.1.5',
+      requires = { {'nvim-lua/plenary.nvim'} },
       config = function()
-        require('stimim.keymaps').bind_fzf()
-      end,
-      requires = { 'junegunn/fzf' },
+        require('stimim.keymaps').bind_telescope()
+      end
     }
 
     use {
@@ -99,6 +89,48 @@ function M.setup()
       plugin.sync()
     end
   end)
+end
+
+function ensure_packer()
+  -- by default, vim.fn.stdpath('data') is '.local/share/nvim'
+  local plugin_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+
+  if vim.loop.fs_stat(plugin_path) then
+    return false
+  end
+
+  print(string.format([[packer.nvim is not installed, checking out...]]))
+  vim.fn.system({
+      'git',
+      'clone',
+      '--depth=1',
+      'https://github.com/wbthomason/packer.nvim',
+      plugin_path,
+    })
+  vim.cmd [[packadd packer.nvim]]
+  return true
+end
+
+function declare_lsp(use, use_coc)
+  if use_coc then
+    use {
+      'neoclide/coc.nvim',
+      branch = 'release',
+      config = function()
+        require('stimim.coc').setup()
+      end
+    }
+  else
+    use {
+      'williamboman/mason.nvim'
+    }
+    use {
+      'williamboman/mason-lspconfig.nvim'
+    }
+    use {
+      'neovim/nvim-lspconfig',
+    }
+  end
 end
 
 return M

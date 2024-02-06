@@ -1,3 +1,15 @@
+function setup_mason()
+  local status, mason = pcall(require, 'mason')
+
+  if not status then
+    -- failed to load
+    return
+  end
+
+  mason.setup()
+  require('mason-lspconfig').setup()
+end
+
 function main()
   vim.opt.compatible = false
   vim.g.mapleader = ','
@@ -25,6 +37,8 @@ function main()
 
   require('stimim.autocmds').setup()
   require('stimim.line_number').setup()
+
+  setup_mason()
 end
 
 main()
