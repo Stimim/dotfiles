@@ -1,2 +1,0 @@
-# source(path outside chroot) destination(path inside chroot)
-/usr/local/google/home/stimim/ /outside/stimim/
