@@ -53,15 +53,14 @@
   alias = !git config --list|grep 'alias\\.'| \
     sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'|sort
 
-# vim:set ft=gitconfig:
 [push]
-	default = simple
+  default = simple
 [http]
-	cookiefile = ~/.gitcookies
+  cookiefile = ~/.gitcookies
 [rerere]
-	enabled = false
+  enabled = false
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [repo]
-	superprojectChoiceExpire = 1632320382
-	superprojectChoice = true
+  superprojectChoiceExpire = 1632320382
+  superprojectChoice = true
