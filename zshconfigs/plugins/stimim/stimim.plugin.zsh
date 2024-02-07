@@ -5,3 +5,5 @@ alias ru='repo upload . --cbr'
 alias rr='repo rebase .'
 
 alias beep="echo -n -e '\a'"
+
+alias tmux='tmux -T RGB'
