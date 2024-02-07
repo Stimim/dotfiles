@@ -4,17 +4,15 @@ return {
   {
     'scrooloose/nerdtree',
     config = function(plugin)
-      require('stimim/keymaps').bind_nerdtree()
+      require('stimim.keymaps').bind_nerdtree()
     end
   },
-
-  'honza/vim-snippets',
 
   {
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function(plugin)
-      require('stimim/statusline').setup()
+      require('stimim.statusline').setup()
     end
   },
 
@@ -60,5 +58,5 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate'
-  }
+  },
 }

@@ -1,0 +1,7 @@
+snippet INCLUDE_GUARD
+  #ifndef ${2:_${1:`toupper(expand("%:r"))`}_H_}
+  #define $2
+  
+  ${0}
+  
+  #endif /* #ifndef $2 */

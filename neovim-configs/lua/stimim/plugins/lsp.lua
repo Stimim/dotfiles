@@ -1,11 +1,17 @@
 local function setup_lspconfig()
   local lspconfig = require('lspconfig')
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   if lspconfig.pyright then
-    lspconfig.pyright.setup {}
+    lspconfig.pyright.setup {
+      capabilities = capabilities,
+    }
   end
+
   if lspconfig.lua_ls then
-    lspconfig.lua_ls.setup {}
+    lspconfig.lua_ls.setup {
+      capabilities = capabilities,
+    }
   end
 
   -- Use LspAttach autocommand to only map the following keys
@@ -42,8 +48,15 @@ end
 
 local function setup_cmp()
   local cmp = require('cmp')
+  local luasnip = require('luasnip')
 
+  -- ref: https://github.com/hrsh7th/nvim-cmp
   cmp.setup {
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      end,
+    },
     mapping = cmp.mapping.preset.insert({
       ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
       ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
@@ -73,7 +86,9 @@ local function setup_cmp()
       end, { 'i', 's' }),
     }),
     sources = {
+      { name = 'luasnip' },
       { name = 'nvim_lsp' },
+      { name = 'buffer' },
     },
   }
 end
@@ -81,13 +96,33 @@ end
 return {
   {
     'neovim/nvim-lspconfig',
-    config = setup_lspconfig
+    config = setup_lspconfig,
+    dependencies = {
+      {
+        'hrsh7th/nvim-cmp',
+        config = setup_cmp,
+        dependencies = {
+          {
+            "L3MON4D3/LuaSnip",
+            -- follow latest release.
+            version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+            -- install jsregexp (optional!).
+            build = "make install_jsregexp"
+          }
+        },
+      },
+      'hrsh7th/cmp-nvim-lsp',
+      {
+        'saadparwaiz1/cmp_luasnip',
+        dependencies = {
+          'honza/vim-snippets',
+        },
+        config = function()
+          require("luasnip.loaders.from_snipmate").lazy_load()
+        end
+      },
+    },
   },
 
-  {
-    'hrsh7th/nvim-cmp',
-    config = setup_cmp,
-  },
-  'hrsh7th/cmp-nvim-lsp',
 
 }
