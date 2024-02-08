@@ -16,6 +16,9 @@ function main()
 
   require('stimim.plugin').setup()
 
+  -- because neorg is loaded lazily, explicity declare the keymaps here.
+  require('stimim.keymaps').bind_neorg()
+
   vim.opt.wrap = false
   vim.opt.cursorline = true
   vim.opt.title = true

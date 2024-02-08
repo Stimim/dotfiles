@@ -29,7 +29,7 @@ return {
   {
     'Yggdroot/indentLine',
     config = function(plugin)
-      vim.g.indentLine_fileTypeExclude = {'json', 'markdown'}
+      vim.g.indentLine_fileTypeExclude = {'json', 'markdown', 'norg'}
     end,
   },
 

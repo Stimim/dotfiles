@@ -21,4 +21,8 @@ function M.bind_nerdtree()
   vim.keymap.set('n', '<leader>o', ':NERDTreeToggle<CR>')
 end
 
+function M.bind_neorg()
+  vim.keymap.set('n', '<leader><leader>i', ':Neorg index<CR>')
+end
+
 return M

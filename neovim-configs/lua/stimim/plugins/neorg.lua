@@ -68,11 +68,13 @@ return {
     },
     config = function()
       setup_loading_template_on_new_file()
+
       require('neorg').setup {
         load = {
           ['core.defaults'] = {}, -- Loads default behaviour
-          ['core.completion'] = { config = { engine = 'nvim-cmp', name = '[Norg]' } },
+          ['core.completion'] = { config = { engine = 'nvim-cmp', name = '[Neorg]' } },
           ['core.integrations.nvim-cmp'] = {},
+          ['core.mode'] = {},
           ['core.journal'] = {
             config = {
               strategy = 'flat',
@@ -84,9 +86,16 @@ return {
             config = {
               default_keybinds = true,
               neorg_leader = '<Leader><Leader>',
+              hook = function(keybinds)
+                keybinds.unmap('norg', 'n', keybinds.leader .. 'id')
+                -- these keymaps only works in norg files
+                keybinds.map('norg', 'n', keybinds.leader .. 'jt', '<cmd>Neorg journal today<CR>')
+                keybinds.map('norg', 'n', keybinds.leader .. 'r', '<cmd>Neorg return<CR>')
+
+              end,
             }
           },
-          --['core.concealer'] = {}, -- Adds pretty icons to your documents
+          ['core.concealer'] = {}, -- Adds pretty icons to your documents
           ['core.dirman'] = { -- Manages Neorg workspaces
             config = {
               workspaces = {
