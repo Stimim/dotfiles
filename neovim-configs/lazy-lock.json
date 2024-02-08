@@ -8,6 +8,7 @@
   "mason-lspconfig.nvim": { "branch": "main", "commit": "0954d7730e749d606ddf8d7ae8846848be435d53" },
   "mason.nvim": { "branch": "main", "commit": "c43eeb5614a09dc17c03a7fb49de2e05de203924" },
   "neorg": { "branch": "main", "commit": "7cf5382821f661aee958bcaf7bc4111c11e6863a" },
+  "neorg-telescope": { "branch": "main", "commit": "6a7a677c40fa3c348924a4e2a06a513e0b34c056" },
   "neorg-templates": { "branch": "main", "commit": "651301f2af6afa0b868ae2b39922831fd8d2ed4d" },
   "nerdcommenter": { "branch": "master", "commit": "e361a44230860d616f799a337bc58f5218ab6e9c" },
   "nerdtree": { "branch": "master", "commit": "60b5e602e95384e6f6d5ba47975b4903c12e2c59" },

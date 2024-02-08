@@ -65,6 +65,7 @@ return {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'nvim-cmp',
       'nvim-lua/plenary.nvim',
+      { "nvim-neorg/neorg-telescope" },
     },
     config = function()
       setup_loading_template_on_new_file()
@@ -74,6 +75,7 @@ return {
           ['core.defaults'] = {}, -- Loads default behaviour
           ['core.completion'] = { config = { engine = 'nvim-cmp', name = '[Neorg]' } },
           ['core.integrations.nvim-cmp'] = {},
+          ['core.integrations.telescope'] = {},
           ['core.mode'] = {},
           ['core.journal'] = {
             config = {
@@ -88,9 +90,20 @@ return {
               neorg_leader = '<Leader><Leader>',
               hook = function(keybinds)
                 keybinds.unmap('norg', 'n', keybinds.leader .. 'id')
+
                 -- these keymaps only works in norg files
                 keybinds.map('norg', 'n', keybinds.leader .. 'jt', '<cmd>Neorg journal today<CR>')
                 keybinds.map('norg', 'n', keybinds.leader .. 'r', '<cmd>Neorg return<CR>')
+
+                keybinds.map_event_to_mode('norg', {
+                  n = { -- Bind keys in normal mode
+                    { keybinds.leader .. 'fl', 'core.integrations.telescope.find_linkable' },
+                    { keybinds.leader .. 'fh', 'core.integrations.telescope.search_headings' },
+                  },
+                  i = { -- Bind in insert mode
+                    { '<C-l>', 'core.integrations.telescope.insert_link' },
+                  },
+                }, { silent = true, noremap = true, })
 
               end,
             }
