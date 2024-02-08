@@ -1,49 +1,52 @@
 -- ref: https://github.com/nvim-neorg/neorg/issues/714#issuecomment-1859183586
 local function setup_loading_template_on_new_file()
-  local file_exists_and_is_empty = function(filepath)
-    local file = io.open(filepath, 'r')   -- Open the file in read mode
-    if file ~= nil then
-      local content = file:read('*all') -- Read the entire content of the file
-      file:close()                      -- Close the file
-      return content == ''              -- Check if the content is empty
-    else
-      return false
-    end
+  local group = vim.api.nvim_create_augroup(
+    'NeorgLoadTemplateGroup',
+    { clear = true }
+  )
+
+  local is_buffer_empty = function(buffer)
+    -- Only read the first two lines.
+    -- If the buffer is empty, it will return { '' }
+    local content = vim.api.nvim_buf_get_lines(buffer, 0, 2, false)
+
+    return #content == 1 and content[1] == ''
   end
 
-  local callback = function(content)
-    local bufname = vim.fn.bufname(content.buffer)
-
+  local callback = function(args)
+    -- ref: https://neovim.io/doc/user/api.html#api-autocmd:~:text=documentation%20and%20troubleshooting).-,callback,-(function%7Cstring)%20optional
+    -- args = {
+    --   id: (number) autocommand id
+    --   event: (string) name of the triggered event autocmd-events
+    --   group: (number|nil) autocommand group id, if any
+    --   match: (string) expanded value of <amatch>
+    --   buf: (number) expanded value of <abuf>
+    --   file: (string) expanded value of <afile>
+    --   data: (any) arbitrary data passed from nvim_exec_autocmds()
+    -- }
     vim.schedule(function()
-      -- Because core.journal calls core.dirman.create_file **twice**,
-      -- this callback function would be invoked twice too.
-      -- Check if the file is empty before loading the template.
-      -- ref: https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/journal/module.lua#L136C40-L138
-      if not file_exists_and_is_empty(bufname) then
+      if not is_buffer_empty(args.buf) then
         return
       end
-      -- lua patterns: https://www.lua.org/pil/20.2.html
-      if string.find(bufname, '/journal/[%d-]+%.norg$') then
-        print('loading template "journal"')
-        vim.api.nvim_cmd(
-          { cmd = 'Neorg', args = { 'templates', 'fload', 'journal' } },
-          {}
-        )
+
+      if string.find(args.file, '/journal/') then
+        vim.api.nvim_cmd({ cmd = 'Neorg', args = { 'templates', 'fload', 'journal' } }, {})
       else
-        vim.api.nvim_cmd(
-          { cmd = 'Neorg', args = { 'inject-metadata' } },
-          {}
-        )
+        vim.api.nvim_cmd({ cmd = 'Neorg', args = { 'inject-metadata' } }, {})
       end
     end)
   end
 
-  require('neorg.core.callbacks').on_event(
-    'core.dirman.events.file_created',
-    callback
+  vim.api.nvim_create_autocmd(
+    { 'BufNewFile', 'BufNew', },
+    {
+      desc = 'Load template on new norg files',
+      pattern = '*.norg',
+      callback = callback,
+      group = group,
+    }
   )
 end
-
 
 return {
   {

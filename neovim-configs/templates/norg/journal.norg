@@ -1,6 +1,6 @@
 {METADATA}
 
 * Quick Links
-  {{:{YESTERDAY}:}}[Yesterday] - {{:{TOMORROW}:}}[Tomorrow]
+  {{:{YESTERDAY_OF_FILENAME}:}}[Yesterday] - {{:{TOMORROW_OF_FILENAME}:}}[Tomorrow]
 * Tasks
   {CURSOR}
