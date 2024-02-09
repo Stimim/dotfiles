@@ -76,9 +76,17 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.5',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'folke/noice.nvim',
+      'nvim-lua/plenary.nvim',
+    },
     config = function(plugin)
       require('stimim.keymaps').bind_telescope()
+
+      require('telescope').setup()
+
+      -- To use: `:Telescope noice`
+      require('telescope').load_extension('noice')
     end
   },
 

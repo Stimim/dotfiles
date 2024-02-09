@@ -25,6 +25,10 @@ local function setup_loading_template_on_new_file()
     --   data: (any) arbitrary data passed from nvim_exec_autocmds()
     -- }
     vim.schedule(function()
+      if not vim.api.nvim_buf_is_valid(args.buf) then
+        return
+      end
+
       if not is_buffer_empty(args.buf) then
         return
       end
