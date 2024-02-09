@@ -18,13 +18,6 @@ return {
     end,
   },
 
-  --{
-    --'scrooloose/nerdtree',
-    --config = function(plugin)
-      --require('stimim.keymaps').bind_nerdtree()
-    --end
-  --},
-
   {
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true },
@@ -48,12 +41,6 @@ return {
     main = 'ibl',
     opts = {},
   },
-  --{
-    --'Yggdroot/indentLine',
-    --config = function(plugin)
-      --vim.g.indentLine_fileTypeExclude = {'json', 'markdown', 'norg'}
-    --end,
-  --},
 
   {
     'folke/noice.nvim',
@@ -67,7 +54,7 @@ return {
           ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
         },
       },
-      -- you can enable a preset for easier configuration
+      ---- you can enable a preset for easier configuration
       presets = {
         bottom_search = true, -- use a classic bottom cmdline for search
         command_palette = true, -- position the cmdline and popupmenu together
@@ -82,7 +69,7 @@ return {
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      --'rcarriga/nvim-notify',
+      'rcarriga/nvim-notify',
     }
   },
 
@@ -102,11 +89,13 @@ return {
 
   {
     'folke/which-key.nvim',
-    config = function(plugin)
-      --vim.o.timeout = true
-      --vim.o.timeoutlen = 300
-      require('which-key').setup()
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
     end,
+    opts = {
+      -- https://github.com/folke/which-key.nvim
+    },
   },
 
   {
