@@ -25,4 +25,9 @@ function M.bind_neorg()
   vim.keymap.set('n', '<leader><leader>i', ':Neorg index<CR>')
 end
 
+function M.bind_oil()
+  local actions = require('oil.actions')
+  vim.keymap.set('n', '<leader>o', actions.open_cwd.callback, {noremap = true})
+end
+
 return M

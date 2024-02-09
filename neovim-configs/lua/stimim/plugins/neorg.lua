@@ -118,6 +118,7 @@ return {
               default_workspace = 'home',
             },
           },
+          ['core.summary'] = {},
           ['external.templates'] = {
             -- ref: https://github.com/pysan3/neorg-templates
             -- templates_dir = vim.fn.stdpath('config') .. '/templates/norg',

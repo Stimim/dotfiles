@@ -2,11 +2,29 @@ return {
   'tpope/vim-sensible',
 
   {
-    'scrooloose/nerdtree',
-    config = function(plugin)
-      require('stimim.keymaps').bind_nerdtree()
-    end
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      -- :help oil
+      require('oil').setup {
+        columns = {
+          'icon',
+          'permissions',
+        }
+      }
+
+      require('stimim.keymaps').bind_oil()
+    end,
   },
+
+  --{
+    --'scrooloose/nerdtree',
+    --config = function(plugin)
+      --require('stimim.keymaps').bind_nerdtree()
+    --end
+  --},
 
   {
     'nvim-lualine/lualine.nvim',
@@ -27,11 +45,19 @@ return {
   'christoomey/vim-tmux-navigator',
 
   {
-    'Yggdroot/indentLine',
-    config = function(plugin)
-      vim.g.indentLine_fileTypeExclude = {'json', 'markdown', 'norg'}
-    end,
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = {},
+    config = function()
+      require('ibl').setup()
+    end
   },
+  --{
+    --'Yggdroot/indentLine',
+    --config = function(plugin)
+      --vim.g.indentLine_fileTypeExclude = {'json', 'markdown', 'norg'}
+    --end,
+  --},
 
   {
     'nvim-telescope/telescope.nvim',
