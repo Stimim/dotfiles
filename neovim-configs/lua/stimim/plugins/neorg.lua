@@ -102,8 +102,8 @@ return {
 
                 keybinds.map_event_to_mode('norg', {
                   n = { -- Bind keys in normal mode
-                    { keybinds.leader .. 'fl', 'core.integrations.telescope.find_linkable' },
-                    { keybinds.leader .. 'fh', 'core.integrations.telescope.search_headings' },
+                    { keybinds.leader .. 'fl', 'core.integrations.telescope.find_linkable', opts = { desc = 'Find Linkable' } },
+                    { keybinds.leader .. 'fh', 'core.integrations.telescope.search_headings', opts = { desc = 'Find Headings' } },
                   },
                   i = { -- Bind in insert mode
                     { '<C-l>', 'core.integrations.telescope.insert_link' },
