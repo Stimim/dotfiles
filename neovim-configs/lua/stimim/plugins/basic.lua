@@ -2,23 +2,6 @@ return {
   'tpope/vim-sensible',
 
   {
-    'stevearc/oil.nvim',
-    -- Optional dependencies
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      -- :help oil
-      require('oil').setup {
-        columns = {
-          'icon',
-          'permissions',
-        }
-      }
-
-      require('stimim.keymaps').bind_oil()
-    end,
-  },
-
-  {
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
