@@ -18,8 +18,4 @@ function M.bind_telescope()
   vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 end
 
-function M.bind_neorg()
-  vim.keymap.set('n', '<leader><leader>i', ':Neorg index<CR>')
-end
-
 return M

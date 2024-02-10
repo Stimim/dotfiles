@@ -52,6 +52,7 @@ local function setup_loading_template_on_new_file()
   )
 end
 
+-- keymap namespace: <leader><leader>
 return {
   {
     'nvim-neorg/neorg',
@@ -137,5 +138,8 @@ return {
         },
       }
     end,
+    keys = {
+      { '<leader><leader>i', '<CMD>Neorg index<CR>', desc = 'Neorg index', noremap = true }
+    },
   },
 }
