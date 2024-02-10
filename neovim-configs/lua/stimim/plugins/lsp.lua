@@ -121,7 +121,17 @@ return {
           require("luasnip.loaders.from_snipmate").lazy_load()
         end
       },
-      'folke/neodev.nvim',
+      {
+        'folke/neodev.nvim',
+        opts = {
+          library = {
+            -- this is must faster.
+            plugins = false,
+            -- you can also specify the list of plugins to make available as a workspace library
+            -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+          },
+        },
+      },
     },
   },
 }

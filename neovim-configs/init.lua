@@ -1,4 +1,4 @@
-function setup_mason()
+local function setup_mason()
   local status, mason = pcall(require, 'mason')
 
   if not status then
@@ -10,9 +10,10 @@ function setup_mason()
   require('mason-lspconfig').setup()
 end
 
-function main()
+local function main()
   vim.opt.compatible = false
-  vim.g.mapleader = ','
+  vim.keymap.set('n', '<space>', '<nop>', { noremap = true })
+  vim.g.mapleader = ' '
 
   require('stimim.plugin').setup()
 
