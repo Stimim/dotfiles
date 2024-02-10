@@ -22,13 +22,13 @@ function main()
   vim.opt.smartcase = true
   vim.opt.ignorecase = true
   vim.opt.winwidth = 85
+  vim.opt.scrolloff = 8
 
   vim.opt.clipboard = 'unnamedplus'
 
   -- setup colorscheme
   vim.opt.background = 'dark'
   vim.opt.termguicolors = true
-  vim.g.ayucolor = 'dark'
 
   require('stimim.autocmds').setup()
   require('stimim.line_number').setup()

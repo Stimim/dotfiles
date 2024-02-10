@@ -2,13 +2,7 @@
 
 local M = {}
 
-function M.setup()
-  ensure_lazy_nvim()
-
-  require('lazy').setup('stimim.plugins')
-end
-
-function ensure_lazy_nvim()
+local function ensure_lazy_nvim()
   local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
   if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -21,6 +15,12 @@ function ensure_lazy_nvim()
     })
   end
   vim.opt.rtp:prepend(lazypath)
+end
+
+function M.setup()
+  ensure_lazy_nvim()
+
+  require('lazy').setup('stimim.plugins')
 end
 
 return M
