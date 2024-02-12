@@ -39,9 +39,6 @@ local function setup_lspconfig()
       vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
       vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-      vim.keymap.set('n', '<leader>f', function()
-        vim.lsp.buf.format { async = true }
-      end, opts)
     end,
   })
 end
@@ -59,7 +56,7 @@ local function setup_cmp()
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-      ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+      ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Down
       -- C-b (back) C-f (forward) for snippet placeholder navigation.
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<CR>'] = cmp.mapping.confirm {
@@ -126,9 +123,9 @@ return {
         opts = {
           library = {
             -- this is must faster.
-            plugins = false,
+            --plugins = false,
             -- you can also specify the list of plugins to make available as a workspace library
-            -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+            plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
           },
         },
       },
