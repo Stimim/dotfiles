@@ -31,6 +31,10 @@ local function main()
   vim.opt.background = 'dark'
   vim.opt.termguicolors = true
 
+  -- disable mouse
+  -- hold "shift" key when using the mouse can temporarily disable mouse support.
+  --vim.opt.mouse = ''
+
   require('stimim.autocmds').setup()
   require('stimim.line_number').setup()
 

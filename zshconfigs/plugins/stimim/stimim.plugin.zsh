@@ -6,4 +6,4 @@ alias rr='repo rebase .'
 
 alias beep="echo -n -e '\a'"
 
-alias tmux='tmux -T RGB'
+alias tmux='tmx2 -u -T RGB'

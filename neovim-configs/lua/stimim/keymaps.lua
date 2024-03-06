@@ -41,4 +41,15 @@ function M.bind_telescope()
   bindkeys(defs, default_opts, prefix)
 end
 
+function M.bind_harpoon()
+  local harpoon = require('harpoon')
+
+  vim.keymap.set('n', '<leader>hm', function() harpoon:list():append() end, { desc = 'Harpoon Add' })
+  vim.keymap.set('n', '<C-e>', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+  -- Toggle previous & next buffers stored within Harpoon list
+  vim.keymap.set('n', '<leader>hp', function() harpoon:list():prev() end, { desc = 'Harpoon Prev' })
+  vim.keymap.set('n', '<leader>hn', function() harpoon:list():next() end, { desc = 'Harpoon Next' })
+end
+
 return M
