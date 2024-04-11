@@ -36,21 +36,24 @@ local function setup_lspconfig()
 
       -- Buffer local mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
-      local opts = { buffer = ev.buf }
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-      vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
-      vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-      vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      --local opts = { buffer = ev.buf }
+      local function make_opts(desc)
+        return { buffer = ev.buf, desc = desc }
+      end
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, make_opts('goto declaration'))
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, make_opts('goto definition'))
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, make_opts('show definition'))
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, make_opts('goto implementation'))
+      vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, make_opts('signature help'))
+      vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, make_opts('add workspace folder'))
+      vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, make_opts('remove workspace folder'))
       vim.keymap.set('n', '<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end, opts)
-      vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      end, make_opts('list workspace folders'))
+      vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, make_opts('type definition'))
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, make_opts('rename'))
+      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, make_opts('code action'))
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, make_opts('references'))
     end,
   })
 end
