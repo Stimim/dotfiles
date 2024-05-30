@@ -1,7 +1,13 @@
 snippet INCLUDE_GUARD
-  #ifndef ${2:_${1:`toupper(expand("%:r"))`}_H_}
+  #ifndef ${2:_${1:`tr(toupper(expand("%:r")), "/", "_")`}_H_}
   #define $2
   
   ${0}
   
   #endif /* #ifndef $2 */
+
+
+snippet namespace
+  namespace ${1:identifier} {
+  }  // namespace $1
+  

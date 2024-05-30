@@ -64,3 +64,5 @@
   superprojectChoice = true
 [includeIf "gitdir:~/work/"]
   path = ~/work/.gitconfig
+[http]
+	cookiefile = /usr/local/google/home/stimim/.gitcookies

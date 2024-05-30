@@ -7,3 +7,6 @@ alias rr='repo rebase .'
 alias beep="echo -n -e '\a'"
 
 alias tmux='tmx2 -u -T RGB'
+
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
