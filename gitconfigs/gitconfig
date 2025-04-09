@@ -66,3 +66,27 @@
   path = ~/work/.gitconfig
 [http]
 	cookiefile = /usr/local/google/home/stimim/.gitcookies
+[url "sso://googleplex-android/"]
+	insteadOf = https://googleplex-android.git.corp.google.com/
+	insteadOf = https://googleplex-android.googlesource.com/
+	pushInsteadOf = https://googleplex-android.git.corp.google.com/
+	pushInsteadOf = https://googleplex-android.googlesource.com/
+[url "sso://googleplex-android-review/"]
+	insteadOf = https://googleplex-android-review.git.corp.google.com/
+	insteadOf = https://googleplex-android-review.googlesource.com/
+[url "sso://googleplex-polygon-android/"]
+	insteadOf = https://googleplex-polygon-android.git.corp.google.com/
+	insteadOf = https://googleplex-polygon-android.googlesource.com/
+	pushInsteadOf = https://googleplex-polygon-android.git.corp.google.com/
+	pushInsteadOf = https://googleplex-polygon-android.googlesource.com/
+[url "sso://googleplex-polygon-android-review/"]
+	insteadOf = https://googleplex-polygon-android-review.git.corp.google.com/
+	insteadOf = https://googleplex-polygon-android-review.googlesource.com/
+[url "sso://partner-android/"]
+	insteadOf = https://partner-android.git.corp.google.com/
+	insteadOf = https://partner-android.googlesource.com/
+	pushInsteadOf = https://partner-android.git.corp.google.com/
+	pushInsteadOf = https://partner-android.googlesource.com/
+[url "sso://partner-android-review/"]
+	insteadOf = https://partner-android-review.git.corp.google.com/
+	insteadOf = https://partner-android-review.googlesource.com/

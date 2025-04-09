@@ -31,7 +31,7 @@ return {
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
     keys = {
-      { '<leader>dd', '<CMD>Neotree toggle<CR>', desc = { 'NeoTree' }, noremap = true, },
+      { '<leader>dd', '<CMD>Neotree toggle<CR>', desc = 'NeoTree', noremap = true, },
     },
   },
 }

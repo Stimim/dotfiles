@@ -3,3 +3,6 @@
 *.o
 *.pyc
 /.vim
+
+.cache
+compile_commands.json
