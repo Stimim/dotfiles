@@ -7,7 +7,7 @@ local function setup_mason()
   end
 
   mason.setup()
-  require('mason-lspconfig').setup()
+  require('mason-lspconfig').setup {}
 end
 
 local function main()

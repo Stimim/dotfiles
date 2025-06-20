@@ -1,2 +1,5 @@
 vimconfigs/plugin/issues.csv
 neovim-configs/plugin/packer_compiled.lua
+
+# google internal vim plugins
+neovim-configs/lua/stimim/plugins/goog.lua

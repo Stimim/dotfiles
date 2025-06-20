@@ -8,6 +8,7 @@ local function declare_template_loader()
     ['cpp.tpl'] = { '*.cpp' },
     ['c.tpl'] = { '*.c' },
     ['py.tpl'] = { '*.py' },
+    ['bazel.tpl'] = { '*.bazel' },
   }
   for template, pattern in pairs(templates) do
     vim.api.nvim_create_autocmd(

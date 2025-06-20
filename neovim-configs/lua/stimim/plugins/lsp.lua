@@ -20,11 +20,11 @@ local function setup_lspconfig()
     }
   end
 
-  if lspconfig.cpplint then
-    lspconfig.cpplint.setup {
-      capabilities = capabilities,
-    }
-  end
+  --if lspconfig.cpplint then
+    --lspconfig.cpplint.setup {
+      --capabilities = capabilities,
+    --}
+  --end
 
   -- Use LspAttach autocommand to only map the following keys
   -- after the language server attaches to the current buffer
