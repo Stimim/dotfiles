@@ -7,10 +7,12 @@ local function setup_mason()
   end
 
   mason.setup()
-  require('mason-lspconfig').setup {}
 end
 
 local function main()
+  if vim.v.progname ~= "nvim" or vim.fn.has('nvim') ~= 1 then
+    return
+  end
   vim.opt.compatible = false
   vim.keymap.set('n', '<space>', '<nop>', { noremap = true })
   vim.g.mapleader = ' '
@@ -37,8 +39,6 @@ local function main()
 
   require('stimim.autocmds').setup()
   require('stimim.line_number').setup()
-
-  setup_mason()
 end
 
 main()

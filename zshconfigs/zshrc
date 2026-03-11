@@ -75,6 +75,7 @@ plugins=(
   fzf
   git
   git-prompt
+  jj
   shrink-path
   stimim
 )

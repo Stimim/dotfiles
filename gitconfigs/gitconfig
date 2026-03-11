@@ -60,7 +60,7 @@
 [init]
   defaultBranch = main
 [repo]
-  superprojectChoiceExpire = 1632320382
+	superprojectChoiceExpire = 1754553263
   superprojectChoice = true
 [includeIf "gitdir:~/work/"]
   path = ~/work/.gitconfig
