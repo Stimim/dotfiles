@@ -9,7 +9,6 @@ local function setup_lspconfig()
 
       -- Buffer local mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
-      --local opts = { buffer = ev.buf }
       local function make_opts(desc)
         return { buffer = ev.buf, desc = desc }
       end
@@ -29,53 +28,14 @@ local function setup_lspconfig()
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, make_opts('references'))
     end,
   })
-end
 
-local function setup_cmp()
-  local cmp = require('cmp')
-  local luasnip = require('luasnip')
-
-  -- ref: https://github.com/hrsh7th/nvim-cmp
-  cmp.setup {
-    snippet = {
-      expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      end,
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-      ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Down
-      -- C-b (back) C-f (forward) for snippet placeholder navigation.
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      },
-      ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-    }),
-    sources = {
-      { name = 'luasnip' },
-      { name = 'nvim_lsp' },
-      { name = 'buffer' },
-    },
-  }
+  -- Inject blink.cmp capabilities into lspconfig defaults
+  local lspconfig = require('lspconfig')
+  lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+    'force',
+    lspconfig.util.default_config.capabilities,
+    require('blink.cmp').get_lsp_capabilities()
+  )
 end
 
 return {
@@ -84,38 +44,47 @@ return {
     config = setup_lspconfig,
     dependencies = {
       {
-        'hrsh7th/nvim-cmp',
-        config = setup_cmp,
+        'saghen/blink.cmp',
+        version = 'v1.*',
         dependencies = {
           {
             "L3MON4D3/LuaSnip",
-            -- follow latest release.
-            version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-            -- install jsregexp (optional!).
-            build = "make install_jsregexp"
-          }
-        },
-      },
-      'hrsh7th/cmp-nvim-lsp',
-      {
-        'saadparwaiz1/cmp_luasnip',
-        dependencies = {
-          'honza/vim-snippets',
-        },
-        config = function()
-          require("luasnip.loaders.from_snipmate").lazy_load()
-        end
-      },
-      {
-        'folke/neodev.nvim',
-        opts = {
-          library = {
-            -- this is must faster.
-            --plugins = false,
-            -- you can also specify the list of plugins to make available as a workspace library
-            plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+            version = "v2.*",
+            build = "make install_jsregexp",
+            dependencies = { 'honza/vim-snippets' },
+            config = function()
+              require("luasnip.loaders.from_snipmate").lazy_load()
+            end
           },
         },
+        opts = {
+          keymap = { preset = 'default' },
+          snippets = {
+            expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+            active = function(filter)
+              if filter and filter.direction then
+                return require('luasnip').jumpable(filter.direction)
+              end
+              return require('luasnip').in_snippet()
+            end,
+            jump = function(direction) require('luasnip').jump(direction) end,
+          },
+          sources = {
+            default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
+            providers = {
+              lazydev = {
+                name = "LazyDev",
+                module = "lazydev.integrations.blink",
+                score_offset = 100,
+              },
+            },
+          },
+        },
+      },
+      {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {},
       },
       {
         'folke/trouble.nvim',

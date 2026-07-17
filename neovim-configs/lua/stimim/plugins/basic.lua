@@ -1,6 +1,4 @@
 return {
-  'tpope/vim-sensible',
-
   {
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true },
@@ -8,8 +6,6 @@ return {
       require('stimim.statusline').setup()
     end
   },
-
-  'preservim/nerdcommenter',
 
   {
     'machakann/vim-sandwich'
@@ -74,19 +70,43 @@ return {
 
   {
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     build = ':TSUpdate',
     config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'lua', 'vim', 'vimdoc', 'c', 'cpp', 'python', 'markdown', 'yaml' },
-        -- all modules are disable by default, must enable them explicitly.
-        highlight = { enable = true, },
-        incremental_selection = { enable = true },
-        textobjects = { enable = true },
-      }
-
+      -- Enable folding
       vim.opt.foldlevel = 999
       vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+      vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+      -- Enable highlighting and indentation
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          pcall(vim.treesitter.start)
+          pcall(function()
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end)
+        end,
+      })
+
+      -- Install parsers
+      local ensure_installed = { 'lua', 'vim', 'vimdoc', 'c', 'cpp', 'python', 'markdown', 'yaml' }
+      local ts_config = require("nvim-treesitter.config")
+      if ts_config.get_installed then
+        local already_installed = ts_config.get_installed()
+        local to_install = vim.tbl_filter(function(parser)
+          return not vim.tbl_contains(already_installed, parser)
+        end, ensure_installed)
+
+        if #to_install > 0 then
+          pcall(function()
+            require("nvim-treesitter").install(to_install)
+          end)
+        end
+      else
+        pcall(function()
+          require("nvim-treesitter").install(ensure_installed)
+        end)
+      end
     end
   },
 
