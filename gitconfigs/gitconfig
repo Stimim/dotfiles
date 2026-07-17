@@ -60,7 +60,7 @@
 [init]
   defaultBranch = main
 [repo]
-	superprojectChoiceExpire = 1754553263
+	superprojectChoiceExpire = 1774505886
   superprojectChoice = true
 [includeIf "gitdir:~/work/"]
   path = ~/work/.gitconfig
@@ -90,3 +90,17 @@
 [url "sso://partner-android-review/"]
 	insteadOf = https://partner-android-review.git.corp.google.com/
 	insteadOf = https://partner-android-review.googlesource.com/
+[url "sso://sisysarch/"]
+	insteadOf = rpc://sisysarch/
+[url "sso://googleplex-android"]
+	insteadof = https://googleplex-android.googlesource.com
+	insteadof = https://googleplex-android-review.googlesource.com
+[url "sso://android"]
+	insteadof = https://android.googlesource.com
+	insteadof = https://android-review.googlesource.com
+[url "sso://partner-android"]
+	insteadof = https://partner-android.googlesource.com
+	insteadof = https://partner-android-review.googlesource.com
+[url "sso://googleplex-polygon-android"]
+	insteadof = https://googleplex-polygon-android.googlesource.com
+	insteadof = https://googleplex-polygon-android.googlesource.com

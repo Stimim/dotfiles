@@ -1,5 +1,10 @@
 # Installation
 
+```bash
+mkdir -p ~/.config
+ln -s $(pwd) ~/.config/nvim
+```
+
 # Testing
 ```
 PREFIX=./neovim-testing
