@@ -23,6 +23,74 @@ This script will:
 
 When you first open Neovim after setup, it will automatically download and compile the default Treesitter parsers (Lua, Vim, C, C++, Python, Markdown, YAML).
 
+## Keybindings
+
+This configuration uses the following keybindings (Leader key is set to **`Space`**):
+
+### 💡 Autocomplete (blink.cmp - Default Preset)
+When the autocomplete menu is visible (Insert Mode):
+*   **`<C-n>`** or **`<Down>`**: Select the next item.
+*   **`<C-p>`** or **`<Up>`**: Select the previous item.
+*   **`<C-y>`**: Accept/confirm the selected suggestion.
+*   **`<C-e>`**: Cancel/hide the completion menu.
+*   **`<C-space>`**: Trigger autocomplete manually (or toggle documentation popup).
+*   **`<Tab>`** / **`<S-Tab>`**: Jump forward/backward through snippet placeholders (when in a snippet).
+*   **`<C-b>`** / **`<C-f>`**: Scroll documentation window up/down.
+*   **`<C-k>`**: Toggle signature help.
+
+### 🔍 LSP / Code Navigation
+Active when a language server (LSP) is attached to the buffer:
+*   **`gd`**: Go to definition (`vim.lsp.buf.definition`).
+*   **`gD`**: Go to declaration (`vim.lsp.buf.declaration`).
+*   **`gi`**: Go to implementation (`vim.lsp.buf.implementation`).
+*   **`gr`**: Show all references (in a list) (`vim.lsp.buf.references`).
+*   **`K`**: Show hover documentation (`vim.lsp.buf.hover`). Press twice to jump into the popup window.
+*   **`gs`**: Show signature help (`vim.lsp.buf.signature_help`).
+*   **`<leader>rn`**: Rename symbol under cursor (project-wide) (`vim.lsp.buf.rename`).
+*   **`<space>ca`**: Show code actions (available fixes/refactorings) (`vim.lsp.buf.code_action`).
+*   **`<leader>D`**: Go to type definition (`vim.lsp.buf.type_definition`).
+*   **`<leader>wa`** / **`<leader>wr`**: Add/Remove workspace folder.
+*   **`<leader>wl`**: List workspace folders.
+
+### 🔎 Fuzzy Finder (Telescope)
+*   **`<leader>ff`**: Find Files (by name in project).
+*   **`<leader>f/`**: Live Grep (search text in all project files).
+*   **`<leader>fb`**: Find open Buffers.
+*   **`<leader>fh`**: Find Help tags.
+*   **`<leader>fr`**: Find Recent files.
+*   **`<leader>fs`**: Find LSP document symbols (functions, variables, etc.).
+*   **`<leader>fS`**: Find LSP workspace symbols.
+*   **`<leader>gf`**: Find Git files (tracked files).
+*   **`<leader>gc`**: Find Git Commits.
+
+### 📌 Harpoon (Fast Navigation)
+*   **`<leader>hm`**: Add current file to Harpoon list.
+*   **`<C-e>`**: Toggle Harpoon quick menu (Normal mode).
+*   **`<leader>hp`**: Jump to previous Harpoon file.
+*   **`<leader>hn`**: Jump to next Harpoon file.
+
+### 📁 File Management
+*   **`<leader>do`**: Open **Oil** (edit filesystem like a text buffer).
+*   **`<leader>dd`**: Toggle **Neo-tree** (sidebar file tree explorer).
+
+### 🚨 Diagnostics
+*   **`<leader>xx`**: Toggle **Trouble** diagnostics list.
+
+### 🖥️ Tmux Integration (Normal Mode)
+*   **`<C-h>`**: Navigate to the left split/pane.
+*   **`<C-j>`**: Navigate to the bottom split/pane.
+*   **`<C-k>`**: Navigate to the top split/pane.
+*   **`<C-l>`**: Navigate to the right split/pane.
+
+### ✍️ Editing Utilities
+*   **Vim Sandwich (Surround)**:
+    *   `sa{motion}{char}`: Add surrounding `{char}` around `{motion}` (e.g. `saw"` to surround word with `"`).
+    *   `sd{char}`: Delete surrounding `{char}`.
+    *   `sr{char1}{char2}`: Replace surrounding `{char1}` with `{char2}`.
+    *   `s{char}` (in Visual Mode): Add surrounding `{char}` around selection.
+*   **Vim Table Mode**:
+    *   **`<leader>tm`**: Toggle Markdown Table Mode (automatically formats tables as you type `|`).
+
 ---
 
 ## Plugins Overview
