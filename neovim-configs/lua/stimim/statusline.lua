@@ -3,7 +3,7 @@ local M = {}
 function M.setup()
   require('lualine').setup {
     options = {
-      theme = 'catppuccin',
+      theme = 'catppuccin-nvim',
     },
     tabline = {
       lualine_a = {'buffers'},

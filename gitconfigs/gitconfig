@@ -1,6 +1,6 @@
 [user]
   name = Stimim Chen
-  email = 106878+Stimim@users.noreply.github.com
+  email = stimim@google.com
 
 [color]
   diff   = auto
@@ -60,7 +60,7 @@
 [init]
   defaultBranch = main
 [repo]
-	superprojectChoiceExpire = 1774505886
+	superprojectChoiceExpire = 1786344441
   superprojectChoice = true
 [includeIf "gitdir:~/work/"]
   path = ~/work/.gitconfig
