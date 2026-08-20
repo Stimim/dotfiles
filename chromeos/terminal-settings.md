@@ -10,7 +10,7 @@ term_.prefs_.set('user-css', '');
 const hackCSS = `
 @font-face { 
   font-family: "UbuntuMono Nerd Font";
-  src: url("https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/UbuntuMono/Regular/UbuntuMonoNerdFont-Regular.ttf") format("truetype");
+  src: url("https://raw.githubusercontent.com/ryanoasis/nerd-fonts/refs/heads/master/patched-fonts/UbuntuMono/UbuntuMonoNerdFont-Regular.ttf") format("truetype");
 }
 x-row {
   text-rendering: optimizeLegibility;
